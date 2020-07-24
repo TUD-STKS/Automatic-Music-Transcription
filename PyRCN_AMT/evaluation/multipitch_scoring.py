@@ -1,11 +1,24 @@
-from madmom.evaluation.onsets import OnsetEvaluation, OnsetSumEvaluation
+import numpy as np
 from ..post_processing.binarize_output import thresholding
 
 
-def determine_threshold(Y, threshold, Pitches_ref):
+def _midi_to_frequency(p):
+    return 440. * (2 ** ((p-69)/12))
+
+
+def get_mir_eval_rows(y, fps=100.):
+    time_t = np.arange(len(y)) / fps
+    freq_hz = [_midi_to_frequency(np.asarray(np.nonzero(row))).ravel() for row in y]
+    return time_t, freq_hz
+
+
+def determine_threshold(Y_true, Y_pred, threshold):
     measures = []
     for thr in threshold:
-        Y_res = thresholding(Y, thr)
+        Y_pred = thresholding(Y_pred, thr)
+        for y_true, y_pred in zip(Y_true, Y_pred):
+            ref_time, ref_freqs = get_mir_eval_rows(y=y_true)
+            est_time, est_freqs = get_mir_eval_rows(y=y_pred)
         measures.append(eval_multipitch_tracking(Pitches_ref, Y_res))
     return measures
 
