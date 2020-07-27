@@ -101,7 +101,7 @@ def train_esn(base_esn, params, feature_settings, pre_processor, scaler, trainin
     esn = clone(base_esn)
     esn.set_params(**params)
     esn.set_params(teacher_scaling=0.1)
-    for fids in training_set:
+    for fids in training_set[:10]:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
         pitch_labels = musicnet.get_pitch_labels(fids[1])
@@ -151,11 +151,11 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
     for fids in training_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        pitch_labels = musicnet.get_pitch_labels(fids[1])
+        pitch_labels = discretize_notes(musicnet.get_pitch_labels(fids[1]), target_widening=False, length=U.shape[0])
         Pitch_times_train.append(pitch_labels)
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         Y_pred_train.append(y_pred)
-    train_scores = determine_threshold(odf=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16), Pitches_ref=Pitch_times_train)
+    train_scores = determine_threshold(Y_true=Y_pred_train, Y_pred=Pitch_times_train, threshold=np.linspace(start=0.1, stop=0.4, num=16))
 
     # Test set
     Y_pred_test = []

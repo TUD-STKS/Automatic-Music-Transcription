@@ -28,5 +28,5 @@ def discretize_beat_labels(beat_labels: list, fps: float = 100., target_widening
 def discretize_notes(note_labels: list, fps: float = 100., num_pitches=128, target_widening=True, length=None):
     note_targets = quantize_notes(notes=note_labels, fps=fps, num_pitches=num_pitches, length=length)
     if target_widening:
-        note_targets = smooth(note_targets, [0.5, 1.0, 0.5])
+        note_targets = smooth(note_targets, np.array([0.25, 0.5, 0.25]))
     return note_targets
