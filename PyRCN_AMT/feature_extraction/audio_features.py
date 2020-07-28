@@ -107,6 +107,6 @@ def extract_features(s: np.ndarray, pre_processor, scaler):
     if scaler is not None:
         U = scaler.fit_transform(X=X, y=None)
     else:
-        U = X
+        U = X - 1.0
 
     return U

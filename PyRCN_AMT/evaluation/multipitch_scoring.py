@@ -17,21 +17,20 @@ def determine_threshold(Y_true, Y_pred, threshold):
     measures = []
     for thr in threshold:
         Y_pred_bin = thresholding(Y_pred, thr)
-        tmp_frame_measures = []
-        for y_true, y_pred in zip(Y_true, Y_pred_bin):
-            ref_time, ref_freqs = get_mir_eval_rows(y=y_true)
-            est_time, est_freqs = get_mir_eval_rows(y=y_pred)
-            tmp_frame_measures.append(mir_eval.multipitch.metrics(ref_time, ref_freqs, est_time, est_freqs))
-        measures.append(np.mean(tmp_frame_measures, axis=0))
+        measures.append(eval_multipitch_tracking(Y_true=Y_true, Y_pred=Y_pred_bin))
     return measures
 
 
-def eval_multipitch_tracking(Pitches_ref, Pitches_res):
-    if isinstance(Pitches_ref, list):
+def eval_multipitch_tracking(Y_true, Y_pred):
+    if isinstance(Y_true, list):
         measures = []
-        for res_pitches, ref_pitches in zip(Pitches_res, Pitches_ref):
-            measures.append(OnsetEvaluation(detections=res_pitches, annotations=ref_pitches))
-        measures = OnsetSumEvaluation(measures)
+        for y_true, y_pred in zip(Y_true, Y_pred):
+            ref_time, ref_freqs = get_mir_eval_rows(y=y_true)
+            est_time, est_freqs = get_mir_eval_rows(y=y_pred)
+            measures.append(mir_eval.multipitch.metrics(ref_time, ref_freqs, est_time, est_freqs))
+        measures = np.mean(measures, axis=0)
     else:
-        measures = OnsetEvaluation(detections=Pitches_res, annotations=Pitches_ref)
+        ref_time, ref_freqs = get_mir_eval_rows(y=Y_true)
+        est_time, est_freqs = get_mir_eval_rows(y=Y_pred)
+        measures = mir_eval.multipitch.metrics(ref_time, ref_freqs, est_time, est_freqs)
     return measures

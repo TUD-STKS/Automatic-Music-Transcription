@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# experiment directory
+PyRCN_AMT/experiments/

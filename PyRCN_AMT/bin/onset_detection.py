@@ -98,11 +98,51 @@ def validate_onset_detection(config_file):
     dump(scores, filename=os.path.join(out_folder, 'scores.lst'))
 
 
+def test_onset_detection(config_file, in_file, out_file):
+    io_params, esn_params, fit_params, feature_settings, loss_fn, n_jobs = parse_config_file(config_file)
+    base_esn = ESNRegressor()
+    base_esn.set_params(**esn_params)
+    feature_settings = parse_feature_settings(feature_settings)
+    pre_processor, scaler = create_processors(feature_settings=feature_settings)
+
+    in_folder = io_params['in_folder']
+    out_folder = io_params['out_folder']
+
+    # Make Paths
+    if not os.path.isdir(out_folder):
+        os.mkdir(out_folder)
+    if not os.path.isdir(os.path.join(out_folder, 'train')):
+        os.mkdir(os.path.join(out_folder, 'train'))
+    if not os.path.isdir(os.path.join(out_folder, 'validation')):
+        os.mkdir(os.path.join(out_folder, 'validation'))
+    if not os.path.isdir(os.path.join(out_folder, 'test')):
+        os.mkdir(os.path.join(out_folder, 'test'))
+    if not os.path.isdir(os.path.join(out_folder, 'models')):
+        os.mkdir(os.path.join(out_folder, 'models'))
+
+    # replicate config file and store results there
+    copyfile(config_file, os.path.join(out_folder, 'config.ini'))
+    try:
+        f_name = r"C:\Users\Steiner\Documents\Python\onset_detection\experiments\experiment_0\models\esn_500_bi_delta.joblib"
+        esn = load(f_name)
+    except FileNotFoundError:
+        training_set, test_set = boeck_onset_dataset.load_dataset(dataset_path=in_folder, fold_id=0, validation=False)
+        esn = train_esn(base_esn, fit_params, feature_settings, pre_processor, scaler, training_set)
+
+    s = load_sound_file(file_name=in_file, feature_settings=feature_settings)
+    U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
+    y_pred = esn.predict(X=U, keep_reservoir_state=False)
+    onset_times_res = peak_picking(y_pred, 0.4)
+    with open(out_file, 'w') as f:
+        for onset_time in onset_times_res:
+            f.write('{0}'.format(onset_time))
+            f.write('\n')
+
+
 def train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set):
     print(params)
     esn = clone(base_esn)
     esn.set_params(**params)
-    esn.set_params(teacher_scaling=0.1)
     for fids in training_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
@@ -177,6 +217,7 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Validate Echo State Network')
     parser.add_argument('-inf',  type=str)
-
+    in_file = r"Z:\Projekt-Musik-Datenbank\musicNET\train_data\1727.wav"
+    out_file = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\1727.onsets"
     args = parser.parse_args()
-    validate_onset_detection(args.inf)
+    test_onset_detection(args.inf, in_file, out_file)
