@@ -1,6 +1,7 @@
 import os
 from intervaltree import IntervalTree
 import csv
+import numpy as np
 
 
 def download_dataset(dataset_path: str = None):
@@ -51,15 +52,15 @@ def get_pitch_labels(filename: str = None):
     :return:
     """
     try:
-        tree = IntervalTree()
+        notes = []
         with open(filename, 'r') as f:
             reader = csv.DictReader(f, delimiter=',')
             for label in reader:
                 start_time = float(label['start_time']) / 44100.
                 end_time = float(label['end_time']) / 44100.
                 note = int(label['note'])
-                tree[start_time:end_time] = note
-        return tree
+                notes.append([start_time, note, end_time - start_time])
+        return np.array(notes)
     except FileNotFoundError:
         raise("File not found: {0}".format(filename))
 
@@ -71,15 +72,15 @@ def get_instrument_labels(filename: str = None):
     :return:
     """
     try:
-        tree = IntervalTree()
+        instruments = []
         with open(filename, 'r') as f:
             reader = csv.DictReader(f, delimiter=',')
             for label in reader:
                 start_time = float(label['start_time']) / 44100.
                 end_time = float(label['end_time']) / 44100.
                 instrument = int(label['instrument'])
-                tree[start_time:end_time] = instrument
-        return tree
+                instruments.append([start_time, instrument, end_time - start_time])
+        return np.array(instruments)
     except FileNotFoundError:
         raise("File not found: {0}".format(filename))
 

@@ -1,4 +1,5 @@
 import numpy as np
+import mir_eval
 from ..post_processing.binarize_output import thresholding
 
 
@@ -15,11 +16,13 @@ def get_mir_eval_rows(y, fps=100.):
 def determine_threshold(Y_true, Y_pred, threshold):
     measures = []
     for thr in threshold:
-        Y_pred = thresholding(Y_pred, thr)
-        for y_true, y_pred in zip(Y_true, Y_pred):
+        Y_pred_bin = thresholding(Y_pred, thr)
+        tmp_frame_measures = []
+        for y_true, y_pred in zip(Y_true, Y_pred_bin):
             ref_time, ref_freqs = get_mir_eval_rows(y=y_true)
             est_time, est_freqs = get_mir_eval_rows(y=y_pred)
-        measures.append(eval_multipitch_tracking(Pitches_ref, Y_res))
+            tmp_frame_measures.append(mir_eval.multipitch.metrics(ref_time, ref_freqs, est_time, est_freqs))
+        measures.append(np.mean(tmp_frame_measures, axis=0))
     return measures
 
 
