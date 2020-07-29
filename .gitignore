@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # experiment directory
-PyRCN_AMT/experiments/
+pyrcn_amt/experiments/
