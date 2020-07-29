@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='pyrcn-amt',
+    name='pyrcn_amt',
     version='0.0.1',
     author='Peter Steiner',
     author_email='peter.steiner@tu-dresden.de',
