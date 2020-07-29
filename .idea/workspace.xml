@@ -498,6 +498,11 @@ for row in y:
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>onset_times_res = peak_picking(y_pred, 0.3)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>list(dict.fromkeys(offset_labels))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -534,11 +539,6 @@ for row in y:
       </expression>
       <expression>
         <expression-string>os.path.join(out_folder, &quot;models&quot;, &quot;esn_&quot; + '500' + '_' + 'False' + '.joblib')</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>os.path.join(out_folder, &quot;models&quot;, &quot;esn_&quot; + **fit_params['reservoir_size'] + '_' + fit_params['bi_directional'] + '.joblib')</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
