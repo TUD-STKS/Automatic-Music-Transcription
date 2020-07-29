@@ -123,7 +123,7 @@ def test_onset_detection(config_file, in_file, out_file):
     # replicate config file and store results there
     copyfile(config_file, os.path.join(out_folder, 'config.ini'))
     try:
-        f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_0\models\esn_500_False.joblib"
+        f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_0\models\esn_20000_True.joblib"
         esn = load(f_name)
     except FileNotFoundError:
         training_set, test_set = boeck_onset_dataset.load_dataset(dataset_path=in_folder, fold_id=0, validation=False)
@@ -133,7 +133,7 @@ def test_onset_detection(config_file, in_file, out_file):
     s = load_sound_file(file_name=in_file, feature_settings=feature_settings)
     U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
     y_pred = esn.predict(X=U, keep_reservoir_state=False)
-    onset_times_res = peak_picking(y_pred, 0.1)
+    onset_times_res = peak_picking(y_pred, 0.4)
     with open(out_file, 'w') as f:
         for onset_time in onset_times_res:
             f.write('{0}'.format(onset_time))
