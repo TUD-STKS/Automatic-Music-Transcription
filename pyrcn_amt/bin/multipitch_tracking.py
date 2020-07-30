@@ -59,7 +59,7 @@ def train_multipitch_tracking(config_file):
     copyfile(config_file, os.path.join(out_folder, 'config.ini'))
 
     training_set, test_set = musicnet.load_dataset(dataset_path=in_folder)
-    losses = Parallel(n_jobs=n_jobs)(delayed(opt_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, loss_function) for params in ParameterGrid(fit_params))
+    losses = Parallel(n_jobs=n_jobs)(delayed(opt_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, loss_function, out_folder) for params in ParameterGrid(fit_params))
     dump(losses, filename=os.path.join(out_folder, 'losses.lst'))
 
 
@@ -89,7 +89,7 @@ def validate_multipitch_tracking(config_file):
     copyfile(config_file, os.path.join(out_folder, 'config.ini'))
 
     training_set, test_set = musicnet.load_dataset(dataset_path=in_folder)
-    scores = Parallel(n_jobs=n_jobs)(delayed(score_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set) for params in ParameterGrid(fit_params))
+    scores = Parallel(n_jobs=n_jobs)(delayed(score_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder) for params in ParameterGrid(fit_params))
     dump(scores, filename=os.path.join(out_folder, 'scores.lst'))
 
 
@@ -118,7 +118,7 @@ def test_multipitch_tracking(config_file, in_file, out_file):
     # replicate config file and store results there
     copyfile(config_file, os.path.join(out_folder, 'config.ini'))
     try:
-        f_name = r"C:\Users\Steiner\Documents\Python\multipitch-tracking\experiments\experiment_0\models\esn_500_False.joblib"
+        f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_1\models\esn_500_False.joblib"
         esn = load(f_name)
     except FileNotFoundError:
         training_set, test_set = musicnet.load_dataset(dataset_path=in_folder)
@@ -138,7 +138,7 @@ def test_multipitch_tracking(config_file, in_file, out_file):
             f.write('\n')
 
 
-def train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set):
+def train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder):
     print(params)
     esn = clone(base_esn)
     esn.set_params(**params)
@@ -150,11 +150,14 @@ def train_esn(base_esn, params, feature_settings, pre_processor, scaler, trainin
         y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=True, length=U.shape[0])
         esn.partial_fit(X=U, y=y_true, update_output_weights=False)
     esn.finalize()
+    serialize = True
+    if serialize:
+        dump(esn, os.path.join(out_folder, "models", "esn_" + str(params['reservoir_size']) + '_' + str(params['bi_directional']) + '.joblib'))
     return esn
 
 
-def opt_function(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, loss_function):
-    esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set)
+def opt_function(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, loss_function, out_folder):
+    esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder)
 
     #  Validation
     train_loss = []
@@ -184,12 +187,12 @@ def opt_function(base_esn, params, feature_settings, pre_processor, scaler, trai
     return [np.mean(train_loss, axis=0), np.mean(val_loss, axis=0)]
 
 
-def score_function(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set):
+def score_function(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder):
     try:
-        f_name = r"C:\Users\Steiner\Documents\Python\multipitch-tracking\experiments\experiment_0\models\esn_500_False.joblib"
+        f_name = os.path.join(out_folder, "models", "esn_" + str(params["reservoir_size"]) + "_" + str(params['bi_directional']) + ".joblib")
         esn = load(f_name)
     except FileNotFoundError:
-        esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set)
+        esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder)
 
     # Training set
     Y_pred_train = []
@@ -225,4 +228,4 @@ if __name__ == '__main__':
     in_file = r"Z:\Projekt-Musik-Datenbank\musicNET\train_data\1727.wav"
     out_file = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\1727.f0"
     args = parser.parse_args()
-    test_multipitch_tracking(args.inf, in_file, out_file)
+    validate_multipitch_tracking(args.inf)

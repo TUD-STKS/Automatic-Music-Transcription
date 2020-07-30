@@ -189,7 +189,11 @@ def opt_function(base_esn, params, feature_settings, pre_processor, scaler, trai
 
 
 def score_function(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder):
-    esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder)
+    try:
+        f_name = os.path.join(out_folder, "models", "esn_" + str(params["reservoir_size"]) + "_" + str(params['bi_directional']) + ".joblib")
+        esn = load(f_name)
+    except FileNotFoundError:
+        esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder)
 
     # Training set
     Y_pred_train = []
