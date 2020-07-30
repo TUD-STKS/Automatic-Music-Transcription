@@ -10,15 +10,15 @@ from joblib import dump, load, Parallel, delayed
 from pyrcn.echo_state_network import ESNRegressor
 from pyrcn_amt.datasets import musicnet
 from pyrcn_amt.feature_extraction.audio_features import parse_feature_settings, create_processors, load_sound_file, extract_features
-from pyrcn_amt.feature_extraction.discretize_labels import discretize_notes
+from pyrcn_amt.feature_extraction.discretize_labels import discretize_onset_labels
 from pyrcn_amt.evaluation import loss_functions
 from pyrcn_amt.config.parse_config_file import parse_config_file
-from pyrcn_amt.evaluation.multipitch_scoring import determine_threshold
-from pyrcn_amt.post_processing.binarize_output import thresholding
+from pyrcn_amt.evaluation.onset_scoring import determine_peak_picking_threshold
+from pyrcn_amt.post_processing.binarize_output import peak_picking
 from pyrcn_amt.evaluation.multipitch_scoring import get_mir_eval_rows
 
 
-def train_multipitch_tracking(config_file):
+def train_musicnet_onsets(config_file):
     io_params, esn_params, fit_params, feature_settings, loss_fn, n_jobs = parse_config_file(config_file)
     base_esn = ESNRegressor()
     base_esn.set_params(**esn_params)
@@ -63,7 +63,7 @@ def train_multipitch_tracking(config_file):
     dump(losses, filename=os.path.join(out_folder, 'losses.lst'))
 
 
-def validate_multipitch_tracking(config_file):
+def validate_musicnet_onsets(config_file):
     io_params, esn_params, fit_params, feature_settings, loss_fn, n_jobs = parse_config_file(config_file)
     base_esn = ESNRegressor()
     base_esn.set_params(**esn_params)
@@ -93,7 +93,7 @@ def validate_multipitch_tracking(config_file):
     dump(scores, filename=os.path.join(out_folder, 'scores.lst'))
 
 
-def test_multipitch_tracking(config_file, in_file, out_file):
+def test_musicnet_onsets(config_file, in_file, out_file):
     io_params, esn_params, fit_params, feature_settings, loss_fn, n_jobs = parse_config_file(config_file)
     base_esn = ESNRegressor()
     base_esn.set_params(**esn_params)
@@ -127,14 +127,10 @@ def test_multipitch_tracking(config_file, in_file, out_file):
     s = load_sound_file(file_name=in_file, feature_settings=feature_settings)
     U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
     y_pred = esn.predict(X=U, keep_reservoir_state=False)
-    y_pred_bin = thresholding(y_pred, 0.3)
-    est_time, est_freqs = get_mir_eval_rows(y=y_pred_bin)
+    onset_times_res = peak_picking(y_pred, 0.4)
     with open(out_file, 'w') as f:
-        for t in range(len(est_time)):
-            f.write('{0}\t'.format(est_time[t]))
-            notes = est_freqs[t]
-            for note in notes:
-                f.write('{0}\t'.format(note))
+        for onset_time in onset_times_res:
+            f.write('{0}'.format(onset_time))
             f.write('\n')
 
 
@@ -146,8 +142,8 @@ def train_esn(base_esn, params, feature_settings, pre_processor, scaler, trainin
     for fids in training_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        pitch_labels = musicnet.get_pitch_labels(fids[1])
-        y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=True, length=U.shape[0])
+        onset_labels = musicnet.get_onset_labels(fids[1])
+        y_true = discretize_onset_labels(onset_labels,  fps=feature_settings['fps'], target_widening=True, length=U.shape[0])
         esn.partial_fit(X=U, y=y_true, update_output_weights=False)
     esn.finalize()
     serialize = True
@@ -164,8 +160,8 @@ def opt_function(base_esn, params, feature_settings, pre_processor, scaler, trai
     for fids in training_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        pitch_labels = musicnet.get_pitch_labels(fids[1])
-        y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=True, length=U.shape[0])
+        onset_labels = musicnet.get_onset_labels(fids[1])
+        y_true = discretize_onset_labels(onset_labels,  fps=feature_settings['fps'], target_widening=True, length=U.shape[0])
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         if isinstance(loss_function, list):
             train_loss.append([loss(y_true, y_pred) for loss in loss_function])
@@ -176,8 +172,8 @@ def opt_function(base_esn, params, feature_settings, pre_processor, scaler, trai
     for fids in test_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        pitch_labels = musicnet.get_pitch_labels(fids[1])
-        y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=True, length=U.shape[0])
+        onset_labels = musicnet.get_onset_labels(fids[1])
+        y_true = discretize_onset_labels(onset_labels,  fps=feature_settings['fps'], target_widening=True, length=U.shape[0])
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         if isinstance(loss_function, list):
             val_loss.append([loss(y_true, y_pred) for loss in loss_function])
@@ -196,27 +192,28 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
 
     # Training set
     Y_pred_train = []
-    Pitch_times_train = []
+    Onset_times_train = []
     for fids in training_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        pitch_labels = discretize_notes(musicnet.get_pitch_labels(fids[1]), target_widening=False, length=U.shape[0])
-        Pitch_times_train.append(pitch_labels)
+        onset_labels = musicnet.get_onset_labels(fids[1])
+        Onset_times_train.append(onset_labels)
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         Y_pred_train.append(y_pred)
-    train_scores = determine_threshold(Y_true=Pitch_times_train, Y_pred=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16))
+        # odf, threshold, Onset_times_ref
+    train_scores = determine_peak_picking_threshold(odf=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16), Onset_times_ref=Onset_times_train)
 
     # Test set
     Y_pred_test = []
-    Pitch_times_test = []
+    Onset_times_test = []
     for fids in test_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        pitch_labels = discretize_notes(musicnet.get_pitch_labels(fids[1]), target_widening=False, length=U.shape[0])
-        Pitch_times_test.append(pitch_labels)
+        onset_labels = musicnet.get_onset_labels(fids[1])
+        Onset_times_test.append(onset_labels)
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         Y_pred_test.append(y_pred)
-    test_scores = determine_threshold(Y_true=Pitch_times_test, Y_pred=Y_pred_test, threshold=np.linspace(start=0.1, stop=0.4, num=16))
+    test_scores = determine_peak_picking_threshold(odf=Y_pred_test, threshold=np.linspace(start=0.1, stop=0.4, num=16), Onset_times_ref=Onset_times_test)
 
     return train_scores, test_scores
 
@@ -228,4 +225,4 @@ if __name__ == '__main__':
     in_file = r"Z:\Projekt-Musik-Datenbank\musicNET\train_data\1727.wav"
     out_file = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\1727.f0"
     args = parser.parse_args()
-    validate_multipitch_tracking(args.inf)
+    validate_musicnet_onsets(args.inf)
