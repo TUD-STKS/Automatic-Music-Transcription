@@ -15,7 +15,6 @@ from pyrcn_amt.evaluation import loss_functions
 from pyrcn_amt.config.parse_config_file import parse_config_file
 from pyrcn_amt.evaluation.onset_scoring import determine_peak_picking_threshold
 from pyrcn_amt.post_processing.binarize_output import peak_picking
-from pyrcn_amt.evaluation.multipitch_scoring import get_mir_eval_rows
 
 
 def train_musicnet_onsets(config_file):
@@ -200,7 +199,6 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
         Onset_times_train.append(onset_labels)
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         Y_pred_train.append(y_pred)
-        # odf, threshold, Onset_times_ref
     train_scores = determine_peak_picking_threshold(odf=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16), Onset_times_ref=Onset_times_train)
 
     # Test set
