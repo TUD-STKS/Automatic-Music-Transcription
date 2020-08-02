@@ -30,7 +30,7 @@ def load_dataset(dataset_path: str = None, fold_id: int = 1, validation: bool = 
     else:
         raise ValueError
 
-    if fold_id == 1:
+    if fold_id == 0:
         with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_1', 'train')) as f:
             content = f.readlines()
             content = [(os.path.join(dataset_path, x.strip() + ".wav"),
@@ -46,7 +46,7 @@ def load_dataset(dataset_path: str = None, fold_id: int = 1, validation: bool = 
             content = [(os.path.join(dataset_path, x.strip() + ".wav"),
                         os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
             test_set = content
-    elif fold_id == 2:
+    elif fold_id == 1:
         with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_2', 'train')) as f:
             content = f.readlines()
             content = [(os.path.join(dataset_path, x.strip() + ".wav"),
@@ -62,7 +62,7 @@ def load_dataset(dataset_path: str = None, fold_id: int = 1, validation: bool = 
             content = [(os.path.join(dataset_path, x.strip() + ".wav"),
                         os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
             test_set = content
-    elif fold_id == 3:
+    elif fold_id == 2:
         with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_3', 'train')) as f:
             content = f.readlines()
             content = [(os.path.join(dataset_path, x.strip() + ".wav"),
@@ -78,7 +78,7 @@ def load_dataset(dataset_path: str = None, fold_id: int = 1, validation: bool = 
             content = [(os.path.join(dataset_path, x.strip() + ".wav"),
                         os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
             test_set = content
-    elif fold_id == 4:
+    elif fold_id == 3:
         with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_4', 'train')) as f:
             content = f.readlines()
             content = [(os.path.join(dataset_path, x.strip() + ".wav"),
