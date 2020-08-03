@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e47db8b8-51cd-4862-9634-de47a25ba2e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/config/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/config/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,7 +14,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="147">
@@ -24,13 +23,64 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="208" column="21" lean-forward="true" selection-start-line="208" selection-start-column="21" selection-end-line="208" selection-end-column="21" />
+            <state relative-caret-position="170">
+              <caret line="168" column="19" lean-forward="true" selection-start-line="168" selection-start-column="19" selection-end-line="168" selection-end-column="19" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/scipy/stats/stats.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-13">
+              <caret line="2967" column="4" selection-start-line="2967" selection-start-column="4" selection-end-line="2967" selection-end-column="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/core/_methods.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="449">
+              <caret line="164" selection-start-line="164" selection-end-line="164" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/audio/signal.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="207" selection-start-line="207" selection-end-line="207" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="401">
+              <caret line="101" selection-start-line="101" selection-end-line="101" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -57,9 +107,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>SameFileError</find>
-      <find>in_dir</find>
-      <find>test_multi</find>
       <find>in_folder</find>
       <find>def train_</find>
       <find>out_folder</find>
@@ -87,6 +134,9 @@
       <find>get_pitch</find>
       <find>maps_dataset.load_</find>
       <find>visualize_odf_</find>
+      <find>loss</find>
+      <find>cosine</find>
+      <find>correlation</find>
     </findStrings>
     <replaceStrings>
       <replace>loss_fn</replace>
@@ -122,7 +172,6 @@
         <option value="$PROJECT_DIR$/PyRCN-AMT/pyrcn_amt/bin/onset_detection.py" />
         <option value="$PROJECT_DIR$/PyRCN_AMT/pyrcn_amt/bin/onset_detection.py" />
         <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/config/parse_config_file.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/post_processing/peak_picking.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/onset_scoring.py" />
@@ -150,10 +199,11 @@
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_1/config.ini" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_7/config.ini" />
         <option value="$PROJECT_DIR$/pyrcn_amt/config/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" />
       </list>
     </option>
   </component>
@@ -180,12 +230,6 @@
               <item name="Automatic-Music-Transcription" type="b2602c69:ProjectViewProjectNode" />
               <item name="Automatic-Music-Transcription" type="462c0819:PsiDirectoryNode" />
               <item name="pyrcn_amt" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Automatic-Music-Transcription" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Automatic-Music-Transcription" type="462c0819:PsiDirectoryNode" />
-              <item name="pyrcn_amt" type="462c0819:PsiDirectoryNode" />
-              <item name="visualization" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Automatic-Music-Transcription" type="b2602c69:ProjectViewProjectNode" />
@@ -498,7 +542,14 @@
       <option name="project" value="LOCAL" />
       <updated>1596177991976</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added visualization tools.">
+      <created>1596382880233</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1596382880233</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -518,8 +569,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -571,6 +622,11 @@
           <line>220</line>
           <option name="timeStamp" value="113" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py</url>
+          <line>178</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -617,6 +673,26 @@ for row in y:
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>1 - pearsonr(x=y_true.flatten(), y=y_pred.flatten())[0]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>1 - pearsonr(x=y_true, y=y_pred)[0]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>cosine(u=y_true.flatten(), v=y_pred.flatten())</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>cosine(u=y_true, v=y_pred)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>visualize_odf_with_targets(odf=y_pred, targets=onset_labels)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -641,36 +717,9 @@ for row in y:
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>visualize_onsets.visualize_odf(odf=y_pred, fps=100.)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>train_files[1][1]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>train_files[1][0]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>train_files[0][0]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>train_files[0][1]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../madmom/madmom/madmom/processors.py" />
-    <entry file="file://$PROJECT_DIR$/pyrcn-amt/bin/onset_detection.py" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -907,48 +956,10 @@ for row in y:
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/core/_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="164" selection-start-line="164" selection-end-line="164" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/audio/signal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="207" selection-start-line="207" selection-end-line="207" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/io/audio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="604" selection-start-line="604" selection-end-line="604" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/core/fromnumeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="3331" selection-start-line="3331" selection-end-line="3331" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/core/memmap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="327" selection-start-line="327" selection-end-line="327" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1040,20 +1051,75 @@ for row in y:
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="208" column="21" lean-forward="true" selection-start-line="208" selection-start-column="21" selection-end-line="208" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="3331" selection-start-line="3331" selection-end-line="3331" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/core/_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="164" selection-start-line="164" selection-end-line="164" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/io/audio.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="604" selection-start-line="604" selection-end-line="604" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/audio/signal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="207" selection-start-line="207" selection-end-line="207" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="101" selection-start-line="101" selection-end-line="101" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/scipy/stats/stats.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-13">
+          <caret line="2967" column="4" selection-start-line="2967" selection-start-column="4" selection-end-line="2967" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="168" column="19" lean-forward="true" selection-start-line="168" selection-start-column="19" selection-end-line="168" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

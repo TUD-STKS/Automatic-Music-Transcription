@@ -8,11 +8,11 @@ def mse(y_true, y_pred):
 
 
 def cosine_distance(y_true, y_pred):
-    return cosine(u=y_true, v=y_pred)
+    return cosine(u=y_true.flatten(), v=y_pred.flatten())
 
 
 def correlation(y_true, y_pred):
-    return 1 - pearsonr(x=y_true, y=y_pred)[0]
+    return 1 - pearsonr(x=y_true.flatten(), y=y_pred.flatten())[0]
 
 
 def bce(y_true, y_pred):
