@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.metrics import accuracy_score
 import mir_eval
 from ..post_processing.binarize_output import thresholding
 
@@ -21,6 +22,14 @@ def determine_threshold(Y_true, Y_pred, threshold):
     return measures
 
 
+def determine_prediction_threshold(Y_true, Y_pred, threshold):
+    measures = []
+    for thr in threshold:
+        Y_pred_bin = thresholding(Y_pred, thr)
+        measures.append(eval_note_prediction(Y_true=Y_true, Y_pred=Y_pred_bin))
+    return measures
+
+
 def eval_multipitch_tracking(Y_true, Y_pred):
     if isinstance(Y_true, list):
         measures = []
@@ -33,4 +42,15 @@ def eval_multipitch_tracking(Y_true, Y_pred):
         ref_time, ref_freqs = get_mir_eval_rows(y=Y_true)
         est_time, est_freqs = get_mir_eval_rows(y=Y_pred)
         measures = mir_eval.multipitch.metrics(ref_time, ref_freqs, est_time, est_freqs)
+    return measures
+
+
+def eval_note_prediction(Y_true, Y_pred):
+    if isinstance(Y_true, list):
+        measures = []
+        for y_true, y_pred in zip(Y_true, Y_pred):
+            measures.append(accuracy_score(y_true=y_true, y_pred=y_pred))
+        measures = np.mean(measures, axis=0)
+    else:
+        measures = accuracy_score(y_true=Y_true, y_pred=Y_pred)
     return measures

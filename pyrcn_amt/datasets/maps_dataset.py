@@ -1,5 +1,4 @@
 import os
-from intervaltree import IntervalTree
 import csv
 import numpy as np
 

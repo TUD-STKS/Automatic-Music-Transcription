@@ -15,6 +15,7 @@ from pyrcn_amt.evaluation import loss_functions
 from pyrcn_amt.config.parse_config_file import parse_config_file
 from pyrcn_amt.evaluation.onset_scoring import determine_peak_picking_threshold
 from pyrcn_amt.post_processing.binarize_output import peak_picking
+from pyrcn_amt.visualization.visualize_onsets import visualize_features_odf_with_targets
 
 
 def train_maps_onsets(config_file):
@@ -59,7 +60,7 @@ def train_maps_onsets(config_file):
 
     losses = []
     for k in range(4):
-        (training_set, validation_set), _ = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=True, configuration=1)
+        (training_set, validation_set), _ = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=True, configuration=2)
         tmp_losses = Parallel(n_jobs=n_jobs)(delayed(opt_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, validation_set, loss_function, out_folder) for params in ParameterGrid(fit_params))
         losses.append(tmp_losses)
     dump(losses, filename=os.path.join(out_folder, 'losses.lst'))
@@ -126,8 +127,8 @@ def test_maps_onsets(config_file, in_file, out_file):
         f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_8\models\esn_500_False.joblib"
         esn = load(f_name)
     except FileNotFoundError:
-        training_set, test_set = maps_dataset.load_dataset(dataset_path=in_folder)
-        esn = train_esn(base_esn, fit_params, feature_settings, pre_processor, scaler, training_set, out_folder)
+        training_set, test_set = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=0, validation=False)
+        Parallel(n_jobs=n_jobs)(delayed(train_esn)(base_esn, params, feature_settings, pre_processor, scaler, training_set + test_set, out_folder) for params in ParameterGrid(fit_params))
 
     s = load_sound_file(file_name=in_file, feature_settings=feature_settings)
     U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
@@ -205,6 +206,7 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
         Onset_times_train.append(onset_labels)
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         Y_pred_train.append(y_pred)
+        visualize_features_odf_with_targets(features=U, odf=y_pred, targets=onset_labels, fps=100.)
     train_scores = determine_peak_picking_threshold(Onset_times_ref=Onset_times_train, odf=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16))
 
     # Test set
@@ -229,4 +231,4 @@ if __name__ == '__main__':
     in_file = r"Z:\Projekt-Musik-Datenbank\MultiPitch-Tracking\MAPS_SptkBGAm\MUS\MAPS_MUS-liz_et2_SptkBGAm.wav"
     out_file = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\MAPS_MUS-liz_et2_SptkBGAm.onsets"
     args = parser.parse_args()
-    test_maps_onsets(args.inf, in_file=in_file, out_file=out_file)
+    train_maps_onsets(args.inf)

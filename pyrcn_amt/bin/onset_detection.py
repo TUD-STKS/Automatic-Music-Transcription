@@ -123,7 +123,7 @@ def test_onset_detection(config_file, in_file, out_file):
     # replicate config file and store results there
     copyfile(config_file, os.path.join(out_folder, 'config.ini'))
     try:
-        f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_0\models\esn_20000_True.joblib"
+        f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_0\models\esn_200000_True.joblib"
         esn = load(f_name)
     except FileNotFoundError:
         training_set, test_set = boeck_onset_dataset.load_dataset(dataset_path=in_folder, fold_id=0, validation=False)
