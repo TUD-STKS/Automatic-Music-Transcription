@@ -44,6 +44,7 @@ def validate_music_prediction(config_file):
     copyfile(config_file, os.path.join(out_folder, 'config.ini'))
 
     (training_set, validation_set), _ = music_prediction_datasets.load_piano_midi_dataset(dataset_path=in_folder, validation=True)
+    training_set = music_prediction_datasets.convert_to_short_sequences(training_set)
     mlb = MultiLabelBinarizer(classes=range(128))
     training_set = [mlb.fit_transform(training_set[k]) for k in range(len(training_set))]
     validation_set = [mlb.fit_transform(validation_set[k]) for k in range(len(validation_set))]
@@ -76,6 +77,7 @@ def test_music_prediction(config_file):
     copyfile(config_file, os.path.join(out_folder, 'config.ini'))
 
     training_set, test_set = music_prediction_datasets.load_piano_midi_dataset(dataset_path=in_folder, validation=False)
+
     mlb = MultiLabelBinarizer(classes=range(128))
     training_set = [mlb.fit_transform(training_set[k]) for k in range(len(training_set))]
     test_set = [mlb.fit_transform(test_set[k]) for k in range(len(test_set))]
@@ -179,12 +181,13 @@ def score_function(base_esn, params, training_set, test_set, out_folder):
         Pitch_times_test.append(X[1:, 21:109])
         Y_pred_test.append(y_pred)
     test_scores = determine_prediction_threshold(Y_true=Pitch_times_test, Y_pred=Y_pred_test, threshold=np.linspace(start=0.1, stop=1.0, num=10))
-
-    X = test_set[0][:100, :]
-    while X.shape[0] <= test_set[0].shape[0]:
-        y_pred = esn.predict(X=X)
+    X = test_set[0]
+    k = 0
+    while X.shape[0] <= 500:
+        y_pred = esn.predict(X=X[:-1, :])
         y_pred = np.asarray(y_pred > 0.2, dtype=int)
-        X = np.vstack((X, y_pred[-2, :]))
+        X = np.vstack((X, y_pred[-1, :]))
+        k = k + 1
     fig, (ax0, ax1, ax2) = plt.subplots(3, 1, figsize=(12, 6))
     ax0.imshow(Pitch_times_test[0].T, origin='lower', aspect='auto', cmap=plt.cm.binary)
     ax0.set_xlabel('n')
@@ -222,4 +225,4 @@ if __name__ == '__main__':
     parser.add_argument('-inf',  type=str)
 
     args = parser.parse_args()
-    test_music_prediction(args.inf)
+    validate_music_prediction(args.inf)

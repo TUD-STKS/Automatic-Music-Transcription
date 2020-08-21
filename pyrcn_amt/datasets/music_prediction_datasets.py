@@ -42,6 +42,16 @@ def load_piano_midi_dataset(dataset_path: str = None, mode: int = 4, validation:
         return training_set, test_set
 
 
+def convert_to_short_sequences(dataset, seq_len: int = 30):
+    sequences = [[], []]
+    for song in dataset:
+        i = 0
+        while i + seq_len + 1 < len(song):
+            sequences[0].append(song[i:i + seq_len + 1])
+            i = i + 1
+    return sequences
+
+
 def get_pitch_labels(filename: str = None):
     """
     This function returns the pitch labels.

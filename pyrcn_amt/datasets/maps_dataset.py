@@ -1,6 +1,7 @@
 import os
 import csv
 import numpy as np
+from madmom.utils import combine_events
 
 
 def download_dataset(dataset_path: str = None):
@@ -135,7 +136,8 @@ def get_onset_labels(filename: str = None):
             onset_labels = []
             for label in reader:
                 onset_labels.append(float(label['OnsetTime']))
-        return list(dict.fromkeys(onset_labels))
+
+        return combine_events(list(dict.fromkeys(onset_labels)), 0.03, combine='mean')
 
     except FileNotFoundError:
         raise("File not found: {0}".format(filename))
@@ -153,7 +155,7 @@ def get_offset_labels(filename: str = None):
             offset_labels = []
             for label in reader:
                 offset_labels.append(float(label['OffsetTime']))
-        return list(dict.fromkeys(offset_labels))
+        return combine_events(list(dict.fromkeys(offset_labels)), 0.03, combine='mean')
 
     except FileNotFoundError:
         raise("File not found: {0}".format(filename))

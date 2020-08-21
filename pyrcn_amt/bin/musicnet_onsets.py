@@ -137,7 +137,6 @@ def train_esn(base_esn, params, feature_settings, pre_processor, scaler, trainin
     print(params)
     esn = clone(base_esn)
     esn.set_params(**params)
-    esn.set_params(teacher_scaling=0.1)
     for fids in training_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)

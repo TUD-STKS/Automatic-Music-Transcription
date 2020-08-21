@@ -15,7 +15,6 @@ from pyrcn_amt.evaluation import loss_functions
 from pyrcn_amt.config.parse_config_file import parse_config_file
 from pyrcn_amt.evaluation.onset_scoring import determine_peak_picking_threshold
 from pyrcn_amt.post_processing.binarize_output import peak_picking
-from pyrcn_amt.visualization.visualize_onsets import visualize_features_odf_with_targets
 
 
 def train_maps_onsets(config_file):
@@ -93,7 +92,7 @@ def validate_maps_onsets(config_file):
 
     scores = []
     for k in range(4):
-        training_set, test_set = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=False)
+        training_set, test_set = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=False, configuration=2)
         tmp_scores = Parallel(n_jobs=n_jobs)(delayed(score_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder) for params in ParameterGrid(fit_params))
         scores.append(tmp_scores)
     dump(scores, filename=os.path.join(out_folder, 'scores.lst'))
@@ -144,7 +143,6 @@ def train_esn(base_esn, params, feature_settings, pre_processor, scaler, trainin
     print(params)
     esn = clone(base_esn)
     esn.set_params(**params)
-    esn.set_params(teacher_scaling=0.1)
     for fids in training_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
@@ -152,7 +150,7 @@ def train_esn(base_esn, params, feature_settings, pre_processor, scaler, trainin
         y_true = discretize_onset_labels(onset_labels,  fps=feature_settings['fps'], target_widening=True, length=U.shape[0])
         esn.partial_fit(X=U, y=y_true, update_output_weights=False)
     esn.finalize()
-    serialize = False
+    serialize = True
     if serialize:
         dump(esn, os.path.join(out_folder, "models", "esn_" + str(params['reservoir_size']) + '_' + str(params['bi_directional']) + '.joblib'))
     return esn
@@ -206,8 +204,7 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
         Onset_times_train.append(onset_labels)
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         Y_pred_train.append(y_pred)
-        visualize_features_odf_with_targets(features=U, odf=y_pred, targets=onset_labels, fps=100.)
-    train_scores = determine_peak_picking_threshold(Onset_times_ref=Onset_times_train, odf=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16))
+    train_scores = determine_peak_picking_threshold(Onset_times_ref=Onset_times_train, odf=Y_pred_train, threshold=np.linspace(start=0.2, stop=0.5, num=16))
 
     # Test set
     Y_pred_test = []
@@ -215,11 +212,11 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
     for fids in test_set:
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        onset_labels = discretize_onset_labels(maps_dataset.get_onset_labels(fids[1]), target_widening=False, length=U.shape[0])
-        Onset_times_train.append(onset_labels)
+        onset_labels = maps_dataset.get_onset_labels(fids[1])
+        Onset_times_test.append(onset_labels)
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         Y_pred_test.append(y_pred)
-    test_scores = determine_peak_picking_threshold(Onset_times_ref=Onset_times_test, odf=Y_pred_test, threshold=np.linspace(start=0.1, stop=0.4, num=16))
+    test_scores = determine_peak_picking_threshold(Onset_times_ref=Onset_times_test, odf=Y_pred_test, threshold=np.linspace(start=0.2, stop=0.5, num=16))
 
     return train_scores, test_scores
 
@@ -231,4 +228,4 @@ if __name__ == '__main__':
     in_file = r"Z:\Projekt-Musik-Datenbank\MultiPitch-Tracking\MAPS_SptkBGAm\MUS\MAPS_MUS-liz_et2_SptkBGAm.wav"
     out_file = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\MAPS_MUS-liz_et2_SptkBGAm.onsets"
     args = parser.parse_args()
-    train_maps_onsets(args.inf)
+    validate_maps_onsets(args.inf)

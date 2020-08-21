@@ -1,6 +1,5 @@
 import os
-import csv
-from collections import deque
+from madmom.utils import combine_events
 
 
 def download_dataset(dataset_path: str = None):
@@ -50,7 +49,8 @@ def get_onset_labels(filename: str = None):
         with open(filename, 'r') as f:
             content = f.readlines()
             onset_labels = [float(x.strip()) for x in content]
-        return onset_labels
+
+        return combine_events(onset_labels, 0.03, combine='mean')
 
     except FileNotFoundError:
         raise("File not found: {0}".format(filename))

@@ -85,18 +85,15 @@ def create_processors(feature_settings: dict):
 
 def load_sound_file(file_name: os.path, feature_settings: dict):
     try:
-        if feature_settings['mono']:
-            s, sr = load_audio_file(filename=file_name, sample_rate=feature_settings['fs'], num_channels=1)
-        else:
-            s, sr = load_audio_file(filename=file_name, sample_rate=feature_settings['fs'])
+        s, sr = load_audio_file(filename=file_name, sample_rate=feature_settings['fs'], dtype=float)
     except LoadAudioFileError:
         s, sr = sf.read(file=file_name)
-        if s.ndim > 1 and feature_settings['mono']:
-            s = s[:, 0]
-        if sr != feature_settings['fs']:
-            s = resample(y=s, orig_sr=sr, target_sr=feature_settings['fs'])
     except FileNotFoundError:
         raise
+    if s.ndim > 1 and feature_settings['mono']:
+        s = s[:, 0]
+    if sr != feature_settings['fs']:
+        s = resample(y=s, orig_sr=sr, target_sr=feature_settings['fs'])
     if feature_settings['normalize']:
         s = s / np.max(np.abs(s))
     return s
