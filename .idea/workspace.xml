@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e47db8b8-51cd-4862-9634-de47a25ba2e2" name="Default Changelist" comment="a lot of trials and errors towards music generation.">
-      <change afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maestro_offsets.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/maestro_dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/config/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/config/config.ini" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +19,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+            <state relative-caret-position="147">
+              <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -29,8 +28,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="220" selection-start-line="220" selection-end-line="220" />
+            <state relative-caret-position="274">
+              <caret line="179" column="106" selection-start-line="179" selection-start-column="106" selection-end-line="179" selection-end-column="106" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -39,34 +38,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/onset_scoring.py">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="90" column="22" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_offsets.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
-              <caret line="219" column="6" selection-start-line="219" selection-start-column="6" selection-end-line="219" selection-end-column="6" />
+            <state relative-caret-position="400">
+              <caret line="179" column="108" selection-start-line="179" selection-start-column="108" selection-end-line="179" selection-end-column="108" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -75,10 +50,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="214" selection-start-line="214" selection-end-line="214" />
+            <state relative-caret-position="463">
+              <caret line="184" column="116" selection-start-line="184" selection-start-column="116" selection-end-line="184" selection-end-column="116" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -98,9 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>exit</find>
-      <find>try:</find>
-      <find>teacher_sc</find>
       <find>base_esn</find>
       <find>teacher_scaling</find>
       <find>self.teacher_scaling</find>
@@ -128,6 +100,9 @@
       <find>training_set, vali</find>
       <find>maps</find>
       <find>def score_</find>
+      <find>loss_f</find>
+      <find>target_widening=</find>
+      <find>target_widening</find>
     </findStrings>
     <replaceStrings>
       <replace>loss_fn</replace>
@@ -191,13 +166,11 @@
         <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_1/config.ini" />
         <option value="$PROJECT_DIR$/test_baf.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/onset_scoring.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/boeck_onset_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py" />
@@ -206,6 +179,8 @@
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/config/config.ini" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" />
       </list>
     </option>
   </component>
@@ -276,7 +251,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.maestro_onsets">
+  <component name="RunManager" selected="Python.maps_onsets">
     <configuration name="maestro_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Automatic-Music-Transcription" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -450,6 +425,7 @@
       <item itemvalue="Python.maps_onsets" />
       <item itemvalue="Python.maestro_onsets" />
       <item itemvalue="Python.musicnet_onsets" />
+      <item itemvalue="Python.onset_detection" />
       <item itemvalue="Python.music_prediction" />
       <item itemvalue="Python.musicnet_frames" />
       <item itemvalue="Python.maestro_dataset" />
@@ -620,7 +596,14 @@
       <option name="project" value="LOCAL" />
       <updated>1598022082231</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="added the maestro dataset and scripts for training, evaluation and testing.">
+      <created>1598440381040</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1598440381040</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -657,14 +640,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.3997833" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -702,7 +686,8 @@
     <MESSAGE value="significant bugfixes for preprocessing features and targets." />
     <MESSAGE value="added maps offset detection" />
     <MESSAGE value="Bugfix when creating discrete offset labels" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bugfix when creating discrete offset labels" />
+    <MESSAGE value="added the maestro dataset and scripts for training, evaluation and testing." />
+    <option name="LAST_COMMIT_MESSAGE" value="added the maestro dataset and scripts for training, evaluation and testing." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1014,16 +999,6 @@ plt.show()</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="150" selection-start-line="150" selection-end-line="150" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/lib/function_base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
@@ -1186,13 +1161,6 @@ plt.show()</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="68" selection-start-line="12" selection-start-column="59" selection-end-line="12" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1279,16 +1247,6 @@ plt.show()</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="90" column="22" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -1306,17 +1264,20 @@ plt.show()</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/onset_scoring.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
+        <state relative-caret-position="168">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py">
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="220" selection-start-line="220" selection-end-line="220" />
+        <state relative-caret-position="1533">
+          <caret line="90" column="22" selection-start-line="90" selection-start-column="4" selection-end-line="90" selection-end-column="22" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -1325,18 +1286,8 @@ plt.show()</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_offsets.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
+        <state relative-caret-position="4263">
           <caret line="219" column="6" selection-start-line="219" selection-start-column="6" selection-end-line="219" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/onset_scoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -1345,8 +1296,45 @@ plt.show()</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
+        <state relative-caret-position="1134">
           <caret line="214" selection-start-line="214" selection-end-line="214" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="179" column="106" selection-start-line="179" selection-start-column="106" selection-end-line="179" selection-end-column="106" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="179" column="108" selection-start-line="179" selection-start-column="108" selection-end-line="179" selection-end-column="108" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="184" column="116" selection-start-line="184" selection-start-column="116" selection-end-line="184" selection-end-column="116" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

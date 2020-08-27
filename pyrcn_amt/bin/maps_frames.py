@@ -170,7 +170,7 @@ def opt_function(base_esn, params, feature_settings, pre_processor, scaler, trai
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
         pitch_labels = maps_dataset.get_pitch_labels(fids[1])
-        y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=True, length=U.shape[0])
+        y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=False, length=U.shape[0])
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         if isinstance(loss_function, list):
             train_loss.append([loss(y_true, y_pred) for loss in loss_function])
@@ -182,7 +182,7 @@ def opt_function(base_esn, params, feature_settings, pre_processor, scaler, trai
         s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
         U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
         pitch_labels = maps_dataset.get_pitch_labels(fids[1])
-        y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=True, length=U.shape[0])
+        y_true = discretize_notes(pitch_labels,  fps=feature_settings['fps'], num_pitches=128, target_widening=False, length=U.shape[0])
         y_pred = esn.predict(X=U, keep_reservoir_state=False)
         if isinstance(loss_function, list):
             val_loss.append([loss(y_true, y_pred) for loss in loss_function])
