@@ -16,6 +16,7 @@ from pyrcn_amt.config.parse_config_file import parse_config_file
 from pyrcn_amt.evaluation.multipitch_scoring import determine_threshold
 from pyrcn_amt.post_processing.binarize_output import thresholding
 from pyrcn_amt.evaluation.multipitch_scoring import get_mir_eval_rows
+from pyrcn_amt.visualization import visualize_multipitch
 
 
 def train_maps_frames(config_file):
@@ -60,7 +61,7 @@ def train_maps_frames(config_file):
 
     losses = []
     for k in range(4):
-        (training_set, validation_set), _ = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=True, configuration=1)
+        (training_set, validation_set), _ = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=True, configuration=3)
         tmp_losses = Parallel(n_jobs=n_jobs)(delayed(opt_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, validation_set, loss_function, out_folder) for params in ParameterGrid(fit_params))
         losses.append(tmp_losses)
     dump(losses, filename=os.path.join(out_folder, 'losses.lst'))
@@ -93,7 +94,7 @@ def validate_maps_frames(config_file):
 
     scores = []
     for k in range(4):
-        training_set, test_set = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=False)
+        training_set, test_set = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=False, configuration=3)
         tmp_scores = Parallel(n_jobs=n_jobs)(delayed(score_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder) for params in ParameterGrid(fit_params))
         scores.append(tmp_scores)
     dump(scores, filename=os.path.join(out_folder, 'scores.lst'))
@@ -199,18 +200,6 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
     except FileNotFoundError:
         esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder)
 
-    # Test set
-    Y_pred_test = []
-    Pitch_times_test = []
-    for fids in test_set:
-        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
-        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        pitch_labels = discretize_notes(maps_dataset.get_pitch_labels(fids[1]), target_widening=False, length=U.shape[0])
-        Pitch_times_test.append(pitch_labels)
-        y_pred = esn.predict(X=U, keep_reservoir_state=False)
-        Y_pred_test.append(y_pred)
-    test_scores = determine_threshold(Y_true=Pitch_times_test, Y_pred=Y_pred_test, threshold=np.linspace(start=0.1, stop=0.4, num=16))
-
     # Training set
     Y_pred_train = []
     Pitch_times_train = []
@@ -223,6 +212,18 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
         Y_pred_train.append(y_pred)
     train_scores = determine_threshold(Y_true=Pitch_times_train, Y_pred=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16))
 
+    # Test set
+    Y_pred_test = []
+    Pitch_times_test = []
+    for fids in test_set:
+        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
+        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
+        pitch_labels = discretize_notes(maps_dataset.get_pitch_labels(fids[1]), target_widening=False, length=U.shape[0])
+        Pitch_times_test.append(pitch_labels)
+        y_pred = esn.predict(X=U, keep_reservoir_state=False)
+        Y_pred_test.append(y_pred)
+        visualize_multipitch.visualize_multipitch_with_targets(multipitch=(y_pred>0.36).astype(int), targets=pitch_labels)
+    test_scores = determine_threshold(Y_true=Pitch_times_test, Y_pred=Y_pred_test, threshold=np.linspace(start=0.1, stop=0.4, num=16))
     return train_scores, test_scores
 
 

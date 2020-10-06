@@ -27,6 +27,8 @@ def load_dataset(dataset_path: str = None, fold_id: int = 1, validation: bool = 
         config_path = "sigtia-conf1-splits"
     elif configuration == 2:
         config_path = "sigtia-conf2-splits"
+    elif configuration == 3:
+        config_path = "sigtia-conf3-splits"
     else:
         raise ValueError
 

@@ -228,4 +228,4 @@ if __name__ == '__main__':
     in_file = r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_audio\ah_development_percussion_bongo1.flac"
     out_file = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\ah_development_percussion_bongo1.onsets"
     args = parser.parse_args()
-    test_onset_detection(args.inf, in_file, out_file)
+    validate_onset_detection(args.inf)
