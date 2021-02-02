@@ -1,138 +1,260 @@
 import numpy as np
+from scipy.spatial.distance import cosine
 import argparse
 import os
-import warnings
+import librosa
+from madmom.processors import SequentialProcessor, ParallelProcessor
+from madmom.audio import SignalProcessor, FramedSignalProcessor
+from madmom.audio.stft import ShortTimeFourierTransformProcessor
+from madmom.audio.filters import LogarithmicFilterbank
+from madmom.audio.spectrogram import FilteredSpectrogramProcessor, LogarithmicSpectrogramProcessor, \
+    SpectrogramDifferenceProcessor
+
 from shutil import copyfile
 from sklearn.model_selection import ParameterGrid
-from sklearn.base import clone
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import mean_squared_error, log_loss
 from joblib import dump, load, Parallel, delayed
 
 from pyrcn.echo_state_network import ESNRegressor
-from pyrcn_amt.datasets import boeck_onset_dataset
-from pyrcn_amt.feature_extraction.audio_features import parse_feature_settings, create_processors, load_sound_file, extract_features
-from pyrcn_amt.feature_extraction.discretize_labels import discretize_onset_labels
-from pyrcn_amt.evaluation import loss_functions
-from pyrcn_amt.config.parse_config_file import parse_config_file
+from pyrcn.base import InputToNode, NodeToNode
+from pyrcn.linear_model import IncrementalRegression, FastIncrementalRegression
+
+from pyrcn_amt.datasets.boeck_onset_dataset import BoeckOnsetCorpus
+from pyrcn_amt.config.parse_configuration import parse_configuration
+from pyrcn_amt.feature_extraction.feature_extractor import FeatureExtractor
 from pyrcn_amt.post_processing.binarize_output import peak_picking
 from pyrcn_amt.evaluation.onset_scoring import determine_peak_picking_threshold
 
 
-def train_onset_detection(config_file):
-    io_params, esn_params, fit_params, feature_settings, loss_fn, n_jobs = parse_config_file(config_file)
-    base_esn = ESNRegressor()
-    base_esn.set_params(**esn_params)
-    feature_settings = parse_feature_settings(feature_settings)
-    pre_processor, scaler = create_processors(feature_settings=feature_settings)
+def create_feature_extraction_pipeline(sr, frame_sizes, fps_hz):
+    audio_loading = Pipeline([("load_audio", FeatureExtractor(librosa.load, sr=sr, mono=True)),
+                              ("normalize", FeatureExtractor(librosa.util.normalize, norm=np.inf))])
 
-    in_folder = io_params['in_folder']
-    out_folder = io_params['out_folder']
+    sig = SignalProcessor(num_channels=1, sample_rate=sr)
+    multi = ParallelProcessor([])
+    for frame_size in frame_sizes:
+        frames = FramedSignalProcessor(frame_size=frame_size, fps=fps_hz)
+        stft = ShortTimeFourierTransformProcessor()  # caching FFT window
+        filt = FilteredSpectrogramProcessor(filterbank=LogarithmicFilterbank, num_bands=12, fmin=30, fmax=17000,
+                                            norm_filters=True, unique_filters=True)
+        spec = LogarithmicSpectrogramProcessor(log=np.log10, mul=1, add=1)
+        diff = SpectrogramDifferenceProcessor(diff_ratio=0.25, positive_diffs=True, stack_diffs=np.hstack)
+        # process each frame size with spec and diff sequentially
+        multi.append(SequentialProcessor([frames, stft, filt, spec, diff]))
+    feature_extractor = FeatureExtractor(SequentialProcessor([sig, multi, np.hstack]))
+
+    feature_extraction_pipeline = Pipeline([("audio_loading", audio_loading),
+                                            ("feature_extractor", feature_extractor)])
+    return feature_extraction_pipeline
+
+
+def create_base_esn(input_to_node_settings, node_to_node_settings, regression_settings):
+    base_input_to_node = InputToNode(random_state=eval(input_to_node_settings.pop("random_state")))
+    remove = []
+    for key, value in input_to_node_settings.items():
+        if isinstance(eval(value), str):
+            base_input_to_node.set_params(**{key: eval(value)})
+            remove.append(key)
+        if not hasattr(eval(value), "__iter__"):
+            base_input_to_node.set_params(**{key: eval(value)})
+            remove.append(key)
+        else:
+            input_to_node_settings[key] = eval(value)
+    for key in remove:
+        del input_to_node_settings[key]
+    base_node_to_node = NodeToNode(random_state=eval(node_to_node_settings.pop("random_state")))
+    remove = []
+    for key, value in node_to_node_settings.items():
+        if isinstance(eval(value), str):
+            base_node_to_node.set_params(**{key: eval(value)})
+            remove.append(key)
+        if not hasattr(eval(value), "__iter__"):
+            base_node_to_node.set_params(**{key: eval(value)})
+            remove.append(key)
+        else:
+            node_to_node_settings[key] = eval(value)
+    for key in remove:
+        del node_to_node_settings[key]
+    base_regressor = eval(regression_settings['regressor'] + '()')
+    del regression_settings['regressor']
+    if not hasattr(eval(regression_settings['alpha']), "__iter__"):
+        base_regressor.set_params(**{'alpha': eval(regression_settings['alpha'])})
+        del regression_settings['alpha']
+    else:
+        regression_settings['alpha'] = eval(regression_settings['alpha'])
+    base_esn = ESNRegressor(input_to_nodes=[('default', base_input_to_node)],
+                            nodes_to_nodes=[('default', base_node_to_node)],
+                            regressor=base_regressor)
+    fit_params = {**input_to_node_settings, **node_to_node_settings, **regression_settings}
+    return base_esn, fit_params
+
+
+def train_onset_detection(config_file):
+    experiment_settings, input_to_node_settings, node_to_node_settings, regression_settings = parse_configuration(
+        config_file=config_file)
 
     # Make Paths
-    if not os.path.isdir(out_folder):
-        os.mkdir(out_folder)
-    if not os.path.isdir(os.path.join(out_folder, 'train')):
-        os.mkdir(os.path.join(out_folder, 'train'))
-    if not os.path.isdir(os.path.join(out_folder, 'validation')):
-        os.mkdir(os.path.join(out_folder, 'validation'))
-    if not os.path.isdir(os.path.join(out_folder, 'test')):
-        os.mkdir(os.path.join(out_folder, 'test'))
-    if not os.path.isdir(os.path.join(out_folder, 'models')):
-        os.mkdir(os.path.join(out_folder, 'models'))
-
-    #   Optimizer
-    if loss_fn == "bce":
-        loss_function = loss_functions.bce
-    elif loss_fn == "cosine_distance":
-        loss_function = loss_functions.cosine_distance
-    elif loss_fn == "correlation":
-        loss_function = loss_functions.correlation
-    elif loss_fn == "mse":
-        loss_function = loss_functions.mse
-    elif loss_fn == "all":
-        loss_function = [loss_functions.cosine_distance, loss_functions.correlation, loss_functions.mse]
-    else:
-        warnings.warn("No valid loss function specified. Using mean_squared_error from sklearn!", UserWarning)
-        loss_function = loss_functions.mean_squared_error
+    if not os.path.isdir(experiment_settings['out_folder']):
+        os.mkdir(experiment_settings['out_folder'])
+    if not os.path.isdir(os.path.join(experiment_settings['out_folder'], 'models')):
+        os.mkdir(os.path.join(experiment_settings['out_folder'], 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(out_folder, 'config.ini'))
+    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.ini'))
+
+    try:
+        feature_extraction_pipeline = load(
+            os.path.join(experiment_settings['out_folder'], 'models', 'feature_extraction_pipeline.joblib'))
+    except FileNotFoundError:
+        feature_extraction_pipeline = \
+            create_feature_extraction_pipeline(sr=44100, frame_sizes=[1024, 2048, 4096], fps_hz=100)
+        dump(feature_extraction_pipeline,
+             os.path.join(experiment_settings['out_folder'], 'models', 'feature_extraction_pipeline.joblib'))
+
+    base_esn, fit_params = create_base_esn(input_to_node_settings, node_to_node_settings, regression_settings)
+
+    corpus = BoeckOnsetCorpus(audio_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_audio",
+                              label_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_annotations",
+                              split_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_splits")
 
     losses = []
     for k in range(8):
-        (training_set, validation_set), _ = boeck_onset_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=True)
-        tmp_losses = Parallel(n_jobs=n_jobs)(delayed(opt_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, validation_set, loss_function, out_folder) for params in ParameterGrid(fit_params))
+        if k == 0:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [0, 1, 2, 3, 4, 5]]))
+            validation_files = corpus.get_utterances(fold=6)
+        elif k == 1:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [1, 2, 3, 4, 5, 6]]))
+            validation_files = corpus.get_utterances(fold=7)
+        elif k == 2:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [2, 3, 4, 5, 6, 7]]))
+            validation_files = corpus.get_utterances(fold=0)
+        elif k == 3:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [3, 4, 5, 6, 7, 0]]))
+            validation_files = corpus.get_utterances(fold=1)
+        elif k == 4:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [4, 5, 6, 7, 0, 1]]))
+            validation_files = corpus.get_utterances(fold=2)
+        elif k == 5:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [5, 6, 7, 0, 1, 2]]))
+            validation_files = corpus.get_utterances(fold=3)
+        elif k == 6:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [6, 7, 0, 1, 2, 3]]))
+            validation_files = corpus.get_utterances(fold=4)
+        elif k == 7:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [7, 0, 1, 2, 3, 4]]))
+            validation_files = corpus.get_utterances(fold=5)
+        else:
+            raise ValueError("maximum number of folds is 8. Currently, k is {0}".format(k))
+        tmp_losses = Parallel(n_jobs=1)(delayed(opt_function)(base_esn, params, feature_extraction_pipeline, corpus,
+                                                              training_files, validation_files,
+                                                              experiment_settings)
+                                        for params in ParameterGrid(fit_params))
         losses.append(tmp_losses)
-    dump(losses, filename=os.path.join(out_folder, 'losses.lst'))
+    dump(losses, filename=os.path.join(experiment_settings["out_folder"], 'losses.lst'))
 
 
 def validate_onset_detection(config_file):
-    io_params, esn_params, fit_params, feature_settings, loss_fn, n_jobs = parse_config_file(config_file)
-    base_esn = ESNRegressor()
-    base_esn.set_params(**esn_params)
-    feature_settings = parse_feature_settings(feature_settings)
-    pre_processor, scaler = create_processors(feature_settings=feature_settings)
-
-    in_folder = io_params['in_folder']
-    out_folder = io_params['out_folder']
+    experiment_settings, input_to_node_settings, node_to_node_settings, regression_settings = parse_configuration(
+        config_file=config_file)
 
     # Make Paths
-    if not os.path.isdir(out_folder):
-        os.mkdir(out_folder)
-    if not os.path.isdir(os.path.join(out_folder, 'train')):
-        os.mkdir(os.path.join(out_folder, 'train'))
-    if not os.path.isdir(os.path.join(out_folder, 'validation')):
-        os.mkdir(os.path.join(out_folder, 'validation'))
-    if not os.path.isdir(os.path.join(out_folder, 'test')):
-        os.mkdir(os.path.join(out_folder, 'test'))
-    if not os.path.isdir(os.path.join(out_folder, 'models')):
-        os.mkdir(os.path.join(out_folder, 'models'))
+    if not os.path.isdir(experiment_settings['out_folder']):
+        os.mkdir(experiment_settings['out_folder'])
+    if not os.path.isdir(os.path.join(experiment_settings['out_folder'], 'models')):
+        os.mkdir(os.path.join(experiment_settings['out_folder'], 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(out_folder, 'config.ini'))
+    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.ini'))
+
+    try:
+        feature_extraction_pipeline = load(
+            os.path.join(experiment_settings['out_folder'], 'models', 'feature_extraction_pipeline.joblib'))
+    except FileNotFoundError:
+        feature_extraction_pipeline = \
+            create_feature_extraction_pipeline(sr=44100, frame_sizes=[1024, 2048, 4096], fps_hz=100)
+        dump(feature_extraction_pipeline,
+             os.path.join(experiment_settings['out_folder'], 'models', 'feature_extraction_pipeline.joblib'))
+
+    base_esn, fit_params = create_base_esn(input_to_node_settings, node_to_node_settings, regression_settings)
+
+    corpus = BoeckOnsetCorpus(audio_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_audio",
+                              label_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_annotations",
+                              split_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_splits")
 
     scores = []
     for k in range(8):
-        training_set, test_set = boeck_onset_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=False)
-        tmp_scores = Parallel(n_jobs=n_jobs)(delayed(score_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder) for params in ParameterGrid(fit_params))
+        if k == 0:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [0, 1, 2, 3, 4, 5]]))
+            validation_files = corpus.get_utterances(fold=6)
+        elif k == 1:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [1, 2, 3, 4, 5, 6]]))
+            validation_files = corpus.get_utterances(fold=7)
+        elif k == 2:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [2, 3, 4, 5, 6, 7]]))
+            validation_files = corpus.get_utterances(fold=0)
+        elif k == 3:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [3, 4, 5, 6, 7, 0]]))
+            validation_files = corpus.get_utterances(fold=1)
+        elif k == 4:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [4, 5, 6, 7, 0, 1]]))
+            validation_files = corpus.get_utterances(fold=2)
+        elif k == 5:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [5, 6, 7, 0, 1, 2]]))
+            validation_files = corpus.get_utterances(fold=3)
+        elif k == 6:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [6, 7, 0, 1, 2, 3]]))
+            validation_files = corpus.get_utterances(fold=4)
+        elif k == 7:
+            training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [7, 0, 1, 2, 3, 4]]))
+            validation_files = corpus.get_utterances(fold=5)
+        else:
+            raise ValueError("maximum number of folds is 8. Currently, k is {0}".format(k))
+        tmp_scores = Parallel(n_jobs=1)(delayed(score_function)(base_esn, params, feature_extraction_pipeline, corpus,
+                                                                training_files, validation_files,
+                                                                experiment_settings)
+                                        for params in ParameterGrid(fit_params))
         scores.append(tmp_scores)
-    dump(scores, filename=os.path.join(out_folder, 'scores.lst'))
+    dump(scores, filename=os.path.join(experiment_settings["out_folder"], 'scores.lst'))
 
 
 def test_onset_detection(config_file, in_file, out_file):
-    io_params, esn_params, fit_params, feature_settings, loss_fn, n_jobs = parse_config_file(config_file)
-    base_esn = ESNRegressor()
-    base_esn.set_params(**esn_params)
-    feature_settings = parse_feature_settings(feature_settings)
-    pre_processor, scaler = create_processors(feature_settings=feature_settings)
-
-    in_folder = io_params['in_folder']
-    out_folder = io_params['out_folder']
+    experiment_settings, input_to_node_settings, node_to_node_settings, regression_settings = parse_configuration(
+        config_file=config_file)
 
     # Make Paths
-    if not os.path.isdir(out_folder):
-        os.mkdir(out_folder)
-    if not os.path.isdir(os.path.join(out_folder, 'train')):
-        os.mkdir(os.path.join(out_folder, 'train'))
-    if not os.path.isdir(os.path.join(out_folder, 'validation')):
-        os.mkdir(os.path.join(out_folder, 'validation'))
-    if not os.path.isdir(os.path.join(out_folder, 'test')):
-        os.mkdir(os.path.join(out_folder, 'test'))
-    if not os.path.isdir(os.path.join(out_folder, 'models')):
-        os.mkdir(os.path.join(out_folder, 'models'))
+    if not os.path.isdir(experiment_settings['out_folder']):
+        os.mkdir(experiment_settings['out_folder'])
+    if not os.path.isdir(os.path.join(experiment_settings['out_folder'], 'models')):
+        os.mkdir(os.path.join(experiment_settings['out_folder'], 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(out_folder, 'config.ini'))
+    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.ini'))
+
     try:
-        f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_0\models\esn_200000_True.joblib"
+        feature_extraction_pipeline = load(
+            os.path.join(experiment_settings['out_folder'], 'models', 'feature_extraction_pipeline.joblib'))
+    except FileNotFoundError:
+        feature_extraction_pipeline = \
+            create_feature_extraction_pipeline(sr=44100, frame_sizes=[1024, 2048, 4096], fps_hz=100)
+        dump(feature_extraction_pipeline,
+             os.path.join(experiment_settings['out_folder'], 'models', 'feature_extraction_pipeline.joblib'))
+
+    base_esn, fit_params = create_base_esn(input_to_node_settings, node_to_node_settings, regression_settings)
+    f_name = os.path.join(experiment_settings["out_folder"], "models", "esn_200000_True.joblib")
+    try:
         esn = load(f_name)
     except FileNotFoundError:
-        training_set, test_set = boeck_onset_dataset.load_dataset(dataset_path=in_folder, fold_id=0, validation=False)
-        Parallel(n_jobs=n_jobs)(delayed(train_esn)(base_esn, params, feature_settings, pre_processor, scaler, training_set + test_set, out_folder) for params in ParameterGrid(fit_params))
+        corpus = BoeckOnsetCorpus(audio_dir=os.path.join(experiment_settings["in_folder"], "onsets_audio"),
+                                  label_dir=os.path.join(experiment_settings["in_folder"], "onsets_annotations"),
+                                  split_dir=os.path.join(experiment_settings["in_folder"], "onsets_splits"))
+        training_files = np.concatenate(([corpus.get_utterances(fold=fold_id) for fold_id in [0, 1, 2, 3, 4, 5, 6, 7]]))
+        Parallel(n_jobs=-1)(delayed(train_esn)(base_esn, params, feature_extraction_pipeline, corpus, training_files,
+                                               experiment_settings) for params in ParameterGrid(fit_params))
         esn = load(f_name)
 
-    s = load_sound_file(file_name=in_file, feature_settings=feature_settings)
-    U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-    y_pred = esn.predict(X=U, keep_reservoir_state=False)
+    U = feature_extraction_pipeline.transform(in_file)
+    y_pred = esn.predict(X=U)
     onset_times_res = peak_picking(y_pred, 0.4)
     with open(out_file, 'w') as f:
         for onset_time in onset_times_res:
@@ -140,92 +262,104 @@ def test_onset_detection(config_file, in_file, out_file):
             f.write('\n')
 
 
-def train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder):
+def train_esn(base_esn, params, feature_extraction_pipeline, corpus, training_utterances, experiment_settings):
     print(params)
-    esn = clone(base_esn)
-    esn.set_params(**params)
-    for fids in training_set:
-        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
-        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        onset_labels = boeck_onset_dataset.get_onset_labels(fids[1])
-        y_true = discretize_onset_labels(onset_labels, fps=feature_settings['fps'], target_widening=True, length=U.shape[0])
-        esn.partial_fit(X=U, y=y_true, update_output_weights=False)
-    esn.finalize()
-    serialize = True
+    esn = base_esn
+    if "input_scaling" in params:
+        esn.input_to_nodes[0][1].set_params(**{"input_scaling": params["input_scaling"]})
+        del params["input_scaling"]
+    if "hidden_layer_size" in params:
+        esn.input_to_nodes[0][1].set_params(**{"hidden_layer_size": params["hidden_layer_size"]})
+        esn.nodes_to_nodes[0][1].set_params(**{"hidden_layer_size": params["hidden_layer_size"]})
+        del params["hidden_layer_size"]
+    if "alpha" in params:
+        esn.regressor.set_params(**{"alpha": params["alpha"]})
+        del params["alpha"]
+    if params:
+        esn.nodes_to_nodes[0][1].set_params(**params)
+
+    for fids in training_utterances[:-1]:
+        U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
+        y = corpus.get_labels(corpus.get_labelfilename(fids), fps=100, n_frames=U.shape[0])
+        esn.partial_fit(X=U, y=y, update_output_weights=False)
+    U = feature_extraction_pipeline.transform(corpus.get_audiofilename(training_utterances[-1])).T
+    y = corpus.get_labels(corpus.get_labelfilename(training_utterances[-1]), fps=100, n_frames=U.shape[0])
+    esn.partial_fit(X=U, y=y, update_output_weights=True)
+    serialize = False
     if serialize:
-        dump(esn, os.path.join(out_folder, "models", "esn_" + str(params['reservoir_size']) + '_' + str(params['bi_directional']) + '.joblib'))
+        dump(esn, os.path.join(experiment_settings["out_folder"], "models", "esn_" + str(params['reservoir_size']) + '_'
+                               + str(params['bi_directional']) + '.joblib'))
     return esn
 
 
-def opt_function(base_esn, params, feature_settings, pre_processor, scaler, training_set, validation_set, loss_function, out_folder):
-    esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder)
+def opt_function(base_esn, params, feature_extraction_pipeline, corpus, training_utterances, validation_utterances,
+                 experiment_settings):
+    esn = train_esn(base_esn, params, feature_extraction_pipeline, corpus, training_utterances, experiment_settings)
 
     #  Validation
     train_loss = []
-    for fids in training_set:
-        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
-        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        onset_labels = boeck_onset_dataset.get_onset_labels(fids[1])
-        y_true = discretize_onset_labels(onset_labels, fps=feature_settings['fps'], target_widening=True, length=U.shape[0])
-        y_pred = esn.predict(X=U, keep_reservoir_state=True)
-        if isinstance(loss_function, list):
-            train_loss.append([loss(y_true, y_pred) for loss in loss_function])
-        else:
-            train_loss.append([loss_function(y_true, y_pred)])
+    for fids in training_utterances:
+        U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
+        y_true = corpus.get_labels(corpus.get_labelfilename(fids), fps=100, n_frames=U.shape[0])
+        y_true[y_true < 1] = 0
+        y_pred = esn.predict(X=U)
+        train_loss.append([cosine(y_true, y_pred), mean_squared_error(y_true, y_pred), log_loss(y_true, y_pred)])
 
     val_loss = []
-    for fids in validation_set:
-        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
-        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        onset_labels = boeck_onset_dataset.get_onset_labels(fids[1])
-        y_true = discretize_onset_labels(onset_labels, fps=feature_settings['fps'], target_widening=True, length=U.shape[0])
-        y_pred = esn.predict(X=U, keep_reservoir_state=True)
-        if isinstance(loss_function, list):
-            val_loss.append([loss(y_true, y_pred) for loss in loss_function])
-        else:
-            val_loss.append([loss_function(y_true, y_pred)])
+    for fids in validation_utterances:
+        U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
+        y_true = corpus.get_labels(corpus.get_labelfilename(fids), fps=100, n_frames=U.shape[0])
+        y_true[y_true < 1] = 0
+        y_pred = esn.predict(X=U)
+        val_loss.append([cosine(y_true, y_pred), mean_squared_error(y_true, y_pred), log_loss(y_true, y_pred)])
 
     return [np.mean(train_loss, axis=0), np.mean(val_loss, axis=0)]
 
 
-def score_function(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder):
+def score_function(base_esn, params, feature_extraction_pipeline, corpus, training_utterances, validation_utterances,
+                   experiment_settings):
     try:
-        f_name = os.path.join(out_folder, "models", "esn_" + str(params["reservoir_size"]) + "_" + str(params['bi_directional']) + ".joblib")
+        f_name = os.path.join(experiment_settings["out_folder"], "models", "esn_" + str(params["reservoir_size"]) +
+                              "_" + str(params['bi_directional']) + ".joblib")
         esn = load(f_name)
     except FileNotFoundError:
-        esn = train_esn(base_esn, params, feature_settings, pre_processor, scaler, training_set, out_folder)
+        esn = train_esn(base_esn, params, feature_extraction_pipeline, corpus, training_utterances, experiment_settings)
 
     # Training set
     Y_pred_train = []
     Onset_times_train = []
-    for fids in training_set:
-        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
-        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        onset_labels = boeck_onset_dataset.get_onset_labels(fids[1])
-        Onset_times_train.append(onset_labels)
-        y_pred = esn.predict(X=U, keep_reservoir_state=True)
+    for fids in training_utterances:
+        U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
+        y_true = corpus.get_onset_events(corpus.get_labelfilename(fids))
+        Onset_times_train.append(y_true)
+        y_pred = esn.predict(X=U)
         Y_pred_train.append(y_pred)
-    train_scores = determine_peak_picking_threshold(odf=Y_pred_train, threshold=np.linspace(start=0.1, stop=0.4, num=16), Onset_times_ref=Onset_times_train)
+    train_scores = determine_peak_picking_threshold(odf=Y_pred_train,
+                                                    threshold=np.linspace(start=0.1, stop=0.4, num=16),
+                                                    Onset_times_ref=Onset_times_train)
 
     # Test set
-    Y_pred_test = []
-    Onset_times_test = []
-    for fids in test_set:
-        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
-        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        onset_labels = boeck_onset_dataset.get_onset_labels(fids[1])
-        Onset_times_test.append(onset_labels)
-        y_pred = esn.predict(X=U, keep_reservoir_state=True)
-        Y_pred_test.append(y_pred)
-    test_scores = determine_peak_picking_threshold(odf=Y_pred_test, threshold=np.linspace(start=0.1, stop=0.4, num=16), Onset_times_ref=Onset_times_test)
+    Y_pred_val = []
+    Onset_times_val = []
+    for fids in validation_utterances:
+        U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
+        y_true = corpus.get_onset_events(corpus.get_labelfilename(fids))
+        Onset_times_val.append(y_true)
+        y_pred = esn.predict(X=U)
+        Y_pred_val.append(y_pred)
+    val_scores = determine_peak_picking_threshold(odf=Y_pred_val,
+                                                  threshold=np.linspace(start=0.1, stop=0.4, num=16),
+                                                  Onset_times_ref=Onset_times_val)
 
-    return train_scores, test_scores
+    return train_scores, val_scores
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Validate Echo State Network')
     parser.add_argument('-inf',  type=str)
-    in_file = r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_audio\ah_development_percussion_bongo1.flac"
-    out_file = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\ah_development_percussion_bongo1.onsets"
+    input_file = \
+        r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_audio\ah_development_percussion_bongo1.flac"
+    output_file = \
+        r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\ah_development_percussion_bongo1.onsets"
     args = parser.parse_args()
-    validate_onset_detection(args.inf)
+    train_onset_detection(args.inf)

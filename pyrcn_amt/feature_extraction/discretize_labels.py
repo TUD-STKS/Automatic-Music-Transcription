@@ -10,6 +10,13 @@ def discretize_onset_labels(onset_labels: list, fps: float = 100., target_wideni
     return onset_targets
 
 
+def discretize_boundary_labels(boundary_labels: list, fps: float = 100., target_widening=True, length=None):
+    boundary_targets = quantize_events(events=boundary_labels, fps=fps, length=length)
+    if target_widening:
+        boundary_targets = np.minimum(smooth(boundary_targets, np.asarray([0.5, 1.0, 0.5])), 1)
+    return boundary_targets
+
+
 def discretize_offset_labels(offset_labels: list, fps: float = 100., target_widening=True, length=None):
     offset_targets = quantize_events(events=offset_labels, fps=fps, length=length)
     if target_widening:

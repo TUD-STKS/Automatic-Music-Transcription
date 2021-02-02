@@ -2,16 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e47db8b8-51cd-4862-9634-de47a25ba2e2" name="Default Changelist" comment="a lot of trials and errors towards music generation.">
-      <change afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets_multi.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/timit_dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pyrcn_amt/feature_extraction/feature_extractor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maestro_offsets.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets_multi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/music_prediction.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/config/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/config/config.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/config/parse_config_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/config/parse_configuration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/ballroom_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/TODO/ballroom_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/boeck_onset_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/boeck_onset_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/gtzan_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/TODO/gtzan_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/hainsworth_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/TODO/hainsworth_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/ieee_beat_tracking_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/TODO/ieee_beat_tracking_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/maestro_dataset.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/music_prediction_datasets.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/TODO/music_prediction_datasets.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/datasets/smc_mirex_dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/datasets/TODO/smc_mirex_dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyrcn_amt/visualization/visualize_multipitch.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyrcn_amt/visualization/visualize_multipitch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,11 +41,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyrcn_amt/visualization/visualize_multipitch.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_recognition.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+            <state relative-caret-position="126">
+              <caret line="240" selection-start-line="240" selection-end-line="240" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -36,20 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="226" column="134" selection-start-line="226" selection-start-column="134" selection-end-line="226" selection-end-column="134" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="777">
-              <caret line="222" selection-start-line="222" selection-end-line="222" />
+            <state relative-caret-position="294">
+              <caret line="266" column="112" selection-start-line="266" selection-start-column="26" selection-end-line="266" selection-end-column="112" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -58,12 +66,33 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/multipitch_scoring.py">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1050">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="130">
+              <caret line="8" column="115" selection-start-line="8" selection-start-column="115" selection-end-line="8" selection-end-column="115" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/timit_dataset.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="166" selection-start-line="166" selection-end-line="166" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/test_feature_extractor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="14" column="68" selection-start-line="14" selection-start-column="68" selection-end-line="14" selection-end-column="68" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,36 +110,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>extract_</find>
-      <find>extract</find>
-      <find>mfcc</find>
-      <find>get</find>
-      <find>discretize_onset_labels</find>
-      <find>discretize</find>
-      <find>onset</find>
-      <find>target_widening</find>
-      <find>, configuration=2</find>
-      <find>configuration=2</find>
-      <find>def score_</find>
-      <find>score_function</find>
-      <find>maps_dataset.load_dataset</find>
-      <find>range(</find>
-      <find>threshold</find>
-      <find>np.zeros</find>
+      <find>cosine_s</find>
+      <find>_new</find>
+      <find>extract_features</find>
+      <find>safe_spar</find>
+      <find>safe_:</find>
+      <find>in_file</find>
+      <find>os.path.join(self.label_dir, utterance)</find>
+      <find>get_ut</find>
       <find>train_esn</find>
-      <find>train_map</find>
-      <find>maps_fr</find>
-      <find>imshow</find>
-      <find>visualize_features</find>
+      <find>train_esn(</find>
       <find>def test</find>
-      <find>esn2</find>
-      <find>def validate</find>
+      <find>def test_</find>
+      <find>keep_resr</find>
+      <find>keep_reser</find>
+      <find>keep</find>
+      <find>keep_</find>
+      <find>FeatureUnion</find>
+      <find>create_feature_extraction_pipeline</find>
+      <find>win_len</find>
+      <find>scaler =</find>
+      <find>base_esn</find>
+      <find>get_label</find>
+      <find>self.audio =</find>
+      <find>csv.</find>
+      <find>get_labels</find>
       <find>def train_esn</find>
-      <find>extern</find>
-      <find>experiment_7</find>
-      <find>y_1 = (</find>
-      <find>dump</find>
-      <find>serialize</find>
+      <find>opt_function</find>
+      <find>def opt_f</find>
+      <find>zero_oone</find>
+      <find>def opt_</find>
     </findStrings>
     <replaceStrings>
       <replace>loss_fn</replace>
@@ -126,6 +155,11 @@
       <replace>configuration=2</replace>
       <replace>maestro</replace>
       <replace>configuration=3</replace>
+      <replace>int(label.minTime*fps):int(label.maxTime*fps)</replace>
+      <replace>carina_dataset</replace>
+      <replace>hidden_layer_size</replace>
+      <replace>k_rec</replace>
+      <replace>alpha</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -139,71 +173,71 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/PyRCN-AMT/pyrcn_amt/bin/onset_detection.py" />
-        <option value="$PROJECT_DIR$/PyRCN_AMT/pyrcn_amt/bin/onset_detection.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/config/parse_config_file.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/post_processing/peak_picking.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/post_processing/binarize_output.py" />
-        <option value="$PROJECT_DIR$/../madmom/madmom/madmom/audio/spectrogram.py" />
-        <option value="$PROJECT_DIR$/pyrcn-amt/bin/onset_detection.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/musicnet/experiment_1/config.ini" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/multipitch_tracking.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onset_frames.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_5/config.ini" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/beat_tracking_datasets.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/ballroom_dataset.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/gtzan_dataset.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/hainsworth_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/ieee_beat_tracking_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/smc_mirex_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/visualization/visualize_features.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_7/config.ini" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/visualization/visualize_onsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/music_prediction.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/music_prediction_datasets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/multipitch_scoring.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_4/config.ini" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_1/config.ini" />
         <option value="$PROJECT_DIR$/test_baf.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/onset_scoring.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/boeck_onset_dataset.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/datasets/maestro_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maestro_offsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/timit_dataset.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_boundary.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets_multi.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/test.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/visualization/visualize_multipitch.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames_2l.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets_multi.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/bits_dataset.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/test_phoneme_recognition.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/carina_dataset.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/test_feature_extractor.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/bits_phoneme_recognition.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/config/parse_config_file.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/feature_extraction/feature_extractor.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_0/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_1/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/boeck_onset_dataset.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_2/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_5/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_4/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_3/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_7/config.ini" />
+        <option value="$PROJECT_DIR$/onset_detection.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_8/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/experiments/experiment_31/config.ini" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/datasets/timit_dataset.py" />
         <option value="$PROJECT_DIR$/pyrcn_amt/config/config.ini" />
         <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" />
-        <option value="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py" />
+        <option value="$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_recognition.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="260" />
-    <option name="y" value="20" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
+    <option name="x" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -230,23 +264,25 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pyrcn_amt/bin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pyrcn_amt/datasets" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\datasets\TODO" />
+      <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_21\models\deprecated" />
+      <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription" />
+      <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\PyRCN-AMT\pyrcn-amt" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\datasets" />
       <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\bin" />
       <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\visualization" />
       <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\evaluation" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription" />
-      <recent name="C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\PyRCN-AMT\pyrcn-amt" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -261,8 +297,29 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.maps_frames_2l">
-    <configuration name="maestro_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.timit_phoneme_recognition">
+    <configuration name="bits_phoneme_recognition" type="PythonConfigurationType" factoryName="Python">
+      <module name="Automatic-Music-Transcription" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyrcn_amt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/bits_phoneme_recognition.py" />
+      <option name="PARAMETERS" value="-inf ../config/config.ini" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="boeck_onset_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Automatic-Music-Transcription" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -274,7 +331,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/datasets/maestro_dataset.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/datasets/boeck_onset_dataset.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -304,6 +361,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="maps_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Automatic-Music-Transcription" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyrcn_amt/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="maps_frames" type="PythonConfigurationType" factoryName="Python">
       <module name="Automatic-Music-Transcription" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -317,27 +395,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py" />
-      <option name="PARAMETERS" value="-inf ../config/config.ini" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="maps_frames_2l" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Automatic-Music-Transcription" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyrcn_amt/bin" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/maps_frames_2l.py" />
       <option name="PARAMETERS" value="-inf ../config/config.ini" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -367,7 +424,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="music_prediction" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="maps_onsets_multi" type="PythonConfigurationType" factoryName="Python">
       <module name="Automatic-Music-Transcription" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -379,8 +436,29 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/music_prediction.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets_multi.py" />
       <option name="PARAMETERS" value="-inf ../config/config.ini" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="musicnet" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Automatic-Music-Transcription" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyrcn_amt/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -451,7 +529,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="timit_phoneme_boundary" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="test_feature_extraction" type="PythonConfigurationType" factoryName="Python">
+      <module name="Automatic-Music-Transcription" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/test_feature_extractor.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_phoneme_recognition" type="PythonConfigurationType" factoryName="Python">
       <module name="Automatic-Music-Transcription" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -463,7 +562,49 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_boundary.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/test_phoneme_recognition.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="timit_dataset" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Automatic-Music-Transcription" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyrcn_amt/datasets" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/datasets/timit_dataset.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="timit_phoneme_recognition" type="PythonConfigurationType" factoryName="Python">
+      <module name="Automatic-Music-Transcription" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyrcn_amt/bin" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_recognition.py" />
       <option name="PARAMETERS" value="-inf ../config/config.ini" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -472,41 +613,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest in onset_detection.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="Automatic-Music-Transcription" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyrcn_amt/bin" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
     <list>
+      <item itemvalue="Python.bits_phoneme_recognition" />
       <item itemvalue="Python.maestro_onsets" />
       <item itemvalue="Python.maps_frames" />
       <item itemvalue="Python.maps_onsets" />
+      <item itemvalue="Python.maps_onsets_multi" />
       <item itemvalue="Python.musicnet_onsets" />
       <item itemvalue="Python.onset_detection" />
-      <item itemvalue="Python.timit_phoneme_boundary" />
-      <item itemvalue="Python.maestro_dataset" />
-      <item itemvalue="Python.maps_frames_2l" />
-      <item itemvalue="Python.music_prediction" />
+      <item itemvalue="Python.test_feature_extraction" />
+      <item itemvalue="Python.test_phoneme_recognition" />
+      <item itemvalue="Python.timit_phoneme_recognition" />
       <item itemvalue="Python.musicnet_frames" />
-      <item itemvalue="Python tests.pytest in onset_detection.py" />
+      <item itemvalue="Python.timit_dataset" />
+      <item itemvalue="Python.boeck_onset_dataset" />
+      <item itemvalue="Python.musicnet" />
+      <item itemvalue="Python.maps_dataset" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.maps_frames_2l" />
-        <item itemvalue="Python tests.pytest in onset_detection.py" />
-        <item itemvalue="Python.onset_detection" />
-        <item itemvalue="Python.maestro_dataset" />
+        <item itemvalue="Python.maps_dataset" />
         <item itemvalue="Python.musicnet_frames" />
+        <item itemvalue="Python.musicnet" />
+        <item itemvalue="Python.boeck_onset_dataset" />
+        <item itemvalue="Python.timit_dataset" />
       </list>
     </recent_temporary>
   </component>
@@ -696,13 +826,17 @@
       <option name="project" value="LOCAL" />
       <updated>1598520380606</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Improved visualization; added a third configuration for splitting MAPS.">
+      <created>1601985614104</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1601985614104</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="pytest_in_test_baf_py - 2020.08.14 at 17h 30m 11s.xml">
-      <configuration name="pytest in test_baf.py" configurationId="tests" />
-    </history-entry>
     <history-entry file="pytest_in_test_baf_py - 2020.08.14 at 17h 32m 01s.xml">
       <configuration name="pytest in test_baf.py" configurationId="tests" />
     </history-entry>
@@ -730,17 +864,20 @@
     <history-entry file="pytest_in_onset_detection_py - 2020.08.27 at 15h 52m 23s.xml">
       <configuration name="pytest in onset_detection.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="pytest_for_test_phoneme_recognition_test_phoneme_recognition - 2020.12.01 at 09h 07m 54s.xml">
+      <configuration name="pytest for test_phoneme_recognition.test_phoneme_recognition" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18967333" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -783,24 +920,25 @@
     <MESSAGE value="target widening not required for computing the loss." />
     <MESSAGE value="target widening in MAESTRO dataset." />
     <MESSAGE value="target widening is also required in musicnet_onsets!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="target widening is also required in musicnet_onsets!!!" />
+    <MESSAGE value="Improved visualization; added a third configuration for splitting MAPS." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved visualization; added a third configuration for splitting MAPS." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py</url>
-          <line>220</line>
+          <line>298</line>
           <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py</url>
-          <line>213</line>
+          <line>297</line>
           <option name="timeStamp" value="475" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py</url>
-          <line>204</line>
+          <line>289</line>
           <option name="timeStamp" value="476" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -809,34 +947,14 @@
           <option name="timeStamp" value="500" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test_baf.py</url>
-          <line>9</line>
-          <option name="timeStamp" value="511" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py</url>
           <line>222</line>
           <option name="timeStamp" value="617" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_offsets.py</url>
-          <line>224</line>
-          <option name="timeStamp" value="653" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py</url>
-          <line>214</line>
-          <option name="timeStamp" value="668" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py</url>
-          <line>207</line>
+          <line>336</line>
           <option name="timeStamp" value="710" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_boundary.py</url>
-          <line>236</line>
-          <option name="timeStamp" value="728" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py</url>
@@ -850,28 +968,88 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py</url>
-          <line>227</line>
+          <line>311</line>
           <option name="timeStamp" value="790" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames_2l.py</url>
-          <line>174</line>
-          <option name="timeStamp" value="808" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames_2l.py</url>
-          <line>167</line>
-          <option name="timeStamp" value="816" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames_2l.py</url>
-          <line>173</line>
-          <option name="timeStamp" value="818" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames_2l.py</url>
           <line>128</line>
           <option name="timeStamp" value="820" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets_multi.py</url>
+          <line>200</line>
+          <option name="timeStamp" value="886" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="888" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/bits_phoneme_recognition.py</url>
+          <line>163</line>
+          <option name="timeStamp" value="901" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py</url>
+          <line>292</line>
+          <option name="timeStamp" value="908" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py</url>
+          <line>234</line>
+          <option name="timeStamp" value="910" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/bits_phoneme_recognition.py</url>
+          <line>191</line>
+          <option name="timeStamp" value="928" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="933" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/bits_phoneme_recognition.py</url>
+          <line>114</line>
+          <option name="timeStamp" value="936" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/bits_phoneme_recognition.py</url>
+          <line>158</line>
+          <option name="timeStamp" value="945" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/bits_phoneme_recognition.py</url>
+          <line>74</line>
+          <option name="timeStamp" value="946" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/test_feature_extractor.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="951" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py</url>
+          <line>236</line>
+          <option name="timeStamp" value="1096" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py</url>
+          <line>245</line>
+          <option name="timeStamp" value="1104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py</url>
+          <line>230</line>
+          <option name="timeStamp" value="1106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py</url>
+          <line>115</line>
+          <option name="timeStamp" value="1120" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -882,9 +1060,42 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="y" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>esn = ESNClassifier(input_to_nodes=[('default', input_to_node)],
+                            nodes_to_nodes=[('default', node_to_node)],
+                            regressor=regressor)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>from sklearn.model_selection import train_test_split
+training,valid =  train_test_split(training_set)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>loss[loss]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>loss = []
+for k in range(128):
+    loss.append(    loss_functions.cosine_distance(
+        y_true=2 * discretize_notes(onset_labels, fps=feature_settings['fps'], target_widening=True, length=U.shape[0])[
+                   :, k], y_pred=y_pred[:, k]))
+np.mean(loss)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>reservoir_state = np.concatenate((reservoir_state, np.flipud(self._forward_pass(reservoir_inputs=np.flipud(X)))), 1)</expression-string>
         <language-id>Python</language-id>
@@ -930,234 +1141,337 @@ plt.show()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>import matplotlib.pyplot as plt
-plt.imshow(Y_pred_train[-1].T, origin='lower', aspect='auto')
-plt.imshow(Pitch_times_train[-1].T, origin='lower', aspect='auto')
-plt.show()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>import matplotlib.pyplot as plt
-fig, (ax0, ax1) = plt.subplots(2, 1, figsize=(12, 6))
-ax0.imshow(Y_pred_train[0].T, origin='lower', aspect='auto')
-ax1.imshow(Pitch_times_train[0].T, origin='lower', aspect='auto')
-plt.show()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>import matplotlib.pyplot as plt
-plt.imshow(Y_pred_train[0].T, origin='lower', aspect='auto')
-plt.imshow(Pitch_times_train[0].T, origin='lower', aspect='auto')
-plt.show()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>import matplotlib.pyplot as plt
-plt.imshow(Y_pred_train[0].T, origin='lower', aspect='auto')
-plt.show()
-plt.imshow(Pitch_times_train[0].T, origin='lower', aspect='auto')
-plt.show()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
     </expressions>
     <expressions id="breakpointCondition">
       <expression>
-        <expression-string>np.max(y_true) &gt; 1</expression-string>
+        <expression-string>k&gt;=5000</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>thr &gt;= 0.45</expression-string>
+        <expression-string>k&gt;=4500</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>thr&gt;=0.3</expression-string>
+        <expression-string>k&gt;=4000</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>line[&quot;audio_filename&quot;] == &quot;2017/MIDI-Unprocessed_071_PIANO071_MID--AUDIO-split_07-08-17_Piano-e_1-04_wav--4.wav&quot;</expression-string>
+        <expression-string>k&gt;=3500</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>line[&quot;audio_filename&quot;] == &quot;2011/MIDI-Unprocessed_15_R1_2011_MID--AUDIO_R1-D6_10_Track10_wav.wav&quot;</expression-string>
+        <expression-string>k&gt;=3000</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>line[&quot;audio_filename&quot;] == &quot;2008/MIDI-Unprocessed_06_R2_2008_01-05_ORIG_MID--AUDIO_06_R2_2008_wav--5.wav&quot;</expression-string>
+        <expression-string>k&gt;=2000</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>thr&gt;=0.4</expression-string>
+        <expression-string>k&gt;=1200</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>k&gt;=21</expression-string>
+        <expression-string>k&gt;=1800</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>k&gt;=60</expression-string>
+        <expression-string>k&gt;=1500</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>len(idx_onsets) &gt; 0 or len(idx_offsets) &gt; 0</expression-string>
+        <expression-string>k&gt;=1100</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>visualize_multipitch(multipitch=y_1)</expression-string>
+        <expression-string>zero_one_loss(y_true, y_pred)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>visualize_multipitch(multipitch=y_pred)</expression-string>
+        <expression-string>log_loss(y_true, y_pred_proba, labels=np.arange(39))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>visualize_multipitch(multipitch=esn2.reservoir_state)</expression-string>
+        <expression-string>log_loss(y_true, y_pred_proba)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>from pyrcn_amt.visualization.visualize_multipitch import visualize_multipitch</expression-string>
+        <expression-string>log_loss(y_true, y_pred)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.max(y_1)</expression-string>
+        <expression-string>mean_squared_error(y_true_proba, y_pred_proba)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.min(y_1)</expression-string>
+        <expression-string>cosine(y_true_proba.ravel(), y_pred_proba.ravel())</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.min(y_pred)</expression-string>
+        <expression-string>cosine(y_true.ravel(), y_pred_proba.ravel())</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>np.max(y_pred)</expression-string>
+        <expression-string>y_true_proba[:, y_true] = 1</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>visualize_multipitch.visualize_multipitch_with_targets(multipitch=(y_pred&gt;0.36).astype(int), targets=pitch_labels)</expression-string>
+        <expression-string>y_true_proba = np.zeros(shape=(y_true.shape[0], 39))</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="118" column="52" selection-end-line="122" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/ieee_beat_tracking_dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" selection-start-line="7" selection-end-line="12" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/ntpath.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="75" selection-start-line="75" selection-end-line="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/csv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="111" column="31" lean-forward="true" selection-start-line="111" selection-start-column="14" selection-end-line="111" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/io/midi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="368" column="38" lean-forward="true" selection-start-line="368" selection-start-column="38" selection-end-line="368" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="309" selection-start-line="309" selection-end-line="309" />
+        <state relative-caret-position="210">
+          <caret line="311" selection-start-line="311" selection-end-line="311" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/maestro_dataset.py">
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/sklearn/utils/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/os.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="356" selection-start-line="356" selection-end-line="356" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/PyRCN-0.0.3b0-py3.7.egg!/pyrcn/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="171" selection-start-line="171" selection-end-line="171" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/PyRCN-0.0.3b0-py3.7.egg!/pyrcn/extreme_learning_machine/_extreme_learning_machine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6791">
+          <caret line="435" column="8" selection-start-line="435" selection-start-column="8" selection-end-line="435" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/_parallel_backends.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="210" selection-start-line="210" selection-end-line="210" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/numpy_pickle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="576" selection-start-line="576" selection-end-line="576" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/PyRCN-0.0.3b0-py3.7.egg!/pyrcn/linear_model/_fast_incremental_regression.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="90" selection-start-line="90" selection-end-line="91" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/PyRCN-0.0.3b0-py3.7.egg!/pyrcn/echo_state_network/_esn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="96" column="10" selection-start-line="96" selection-start-column="9" selection-end-line="96" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/loss_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="27" column="49" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/parse_configuration.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="14" selection-start-line="14" selection-end-line="15" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_10/config.ini">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_0/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/configparser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="957" selection-start-line="957" selection-end-line="957" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="728">
+          <caret line="37" column="23" lean-forward="true" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/scipy/fft/_pocketfft/basic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/audio/signal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
+          <caret line="1135" selection-start-line="1135" selection-end-line="1135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/audio/stft.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="510" selection-start-line="510" selection-end-line="510" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/processors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="119" selection-start-line="119" selection-end-line="119" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/feature_extractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="359">
+          <caret line="86" selection-start-line="86" selection-end-line="86" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#12#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/sklearn/pipeline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="549" selection-start-line="549" selection-end-line="549" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/TODO/gtzan_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-822">
+          <caret line="51" column="36" selection-start-line="51" selection-start-column="36" selection-end-line="51" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_1/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="26" lean-forward="true" selection-start-line="5" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_5/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="26" lean-forward="true" selection-start-line="5" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_4/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="109" selection-start-line="2" selection-start-column="109" selection-end-line="2" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_3/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="109" selection-start-line="2" selection-start-column="109" selection-end-line="2" selection-end-column="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_2/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onset_detection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#18#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_offsets.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="179" column="108" selection-start-line="179" selection-start-column="108" selection-end-line="179" selection-end-column="108" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_onsets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="946">
-          <caret line="173" column="106" selection-start-line="173" selection-start-column="106" selection-end-line="173" selection-end-column="106" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_offsets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="173" column="108" selection-start-line="173" selection-start-column="108" selection-end-line="173" selection-end-column="108" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maestro_frames.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="151" column="13" selection-start-line="151" selection-start-column="4" selection-end-line="151" selection-end-column="13" />
+        <state>
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -1166,306 +1480,104 @@ plt.show()</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/musicnet_frames.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="201" column="97" selection-start-line="201" selection-start-column="92" selection-end-line="201" selection-end-column="97" />
+        <state relative-caret-position="312">
+          <caret line="55" column="10" selection-end-line="309" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/numpy/core/function_base.py">
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_7/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_8/config.ini">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_9/config.ini">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_17/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="7" lean-forward="true" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_21/config.ini">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_31/config.ini">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/test_feature_extractor.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/musicnet_onsets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="173" column="106" selection-start-line="173" selection-start-column="106" selection-end-line="173" selection-end-column="106" />
+          <caret line="14" column="68" selection-start-line="14" selection-start-column="68" selection-end-line="14" selection-end-column="68" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/utils/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-454">
-          <caret line="267" column="29" lean-forward="true" selection-start-line="267" selection-start-column="29" selection-end-line="267" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/smc_mirex_dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="25" column="58" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/sklearn/model_selection/_split.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="2115" selection-start-line="2115" selection-end-line="2115" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/audio/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#954#1018#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/boeck_onset_dataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="41" selection-start-line="41" selection-end-line="55" selection-end-column="53" />
+        <state relative-caret-position="-273">
+          <caret line="11" selection-start-line="11" selection-end-line="12" selection-end-column="31" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/timit_dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/evaluation/onsets.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="167" column="59" selection-start-line="167" selection-start-column="59" selection-end-line="167" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_boundary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2982">
-          <caret line="160" column="29" selection-start-line="160" selection-start-column="29" selection-end-line="160" selection-end-column="29" />
-          <folding>
-            <element signature="e#138#156#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/python_speech_features/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="9" column="42" selection-start-line="7" selection-start-column="9" selection-end-line="9" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets_multi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4515">
-          <caret line="231" column="9" selection-start-line="231" selection-start-column="9" selection-end-line="231" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/onset_scoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/mir_eval/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="903" selection-start-line="903" selection-end-line="903" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/mir_eval/multipitch.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="452" selection-start-line="452" selection-end-line="452" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/maps_dataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+        <state relative-caret-position="172">
+          <caret line="174" selection-start-line="174" selection-end-line="174" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/musicnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/utils/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-706">
+          <caret line="378" column="4" selection-start-line="378" selection-start-column="4" selection-end-line="378" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/datasets/timit_dataset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="166" selection-start-line="166" selection-end-line="166" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/madmom/io/audio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="550" column="4" selection-start-line="550" selection-start-column="4" selection-end-line="550" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/externals/loky/backend/popen_loky_win32.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/multiprocessing/connection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="256" selection-start-line="256" selection-end-line="256" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/multiprocessing/queues.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="112" selection-start-line="112" selection-end-line="112" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/externals/loky/process_executor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="417" selection-start-line="417" selection-end-line="417" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_7/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="10" lean-forward="true" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/test.py" />
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/onset_detection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="133" column="11" selection-start-line="133" selection-start-column="11" selection-end-line="133" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/audio_features.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1596">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/feature_extraction/discretize_labels.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="13" column="82" selection-start-line="13" selection-start-column="82" selection-end-line="13" selection-end-column="82" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/parallel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4074">
-          <caret line="224" selection-start-line="224" selection-end-line="224" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_17/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/visualization/visualize_features.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="15" lean-forward="true" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/scipy/sparse/compressed.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="469" selection-start-line="469" selection-end-line="469" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/scipy/sparse/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="468" selection-start-line="468" selection-end-line="468" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/PyRCN-0.0.3-py3.7.egg!/pyrcn/echo_state_network.py">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
-          <caret line="1016" selection-start-line="1016" selection-end-line="1016" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames_2l.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2352">
-          <caret line="128" selection-start-line="128" selection-end-line="128" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/experiments/experiment_0/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/evaluation/multipitch_scoring.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/visualization/visualize_multipitch.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+          <caret line="280" selection-start-line="280" selection-end-line="282" selection-end-column="91" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -1474,18 +1586,32 @@ plt.show()</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_frames.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="226" column="134" selection-start-line="226" selection-start-column="134" selection-end-line="226" selection-end-column="134" />
+        <state relative-caret-position="294">
+          <caret line="266" column="112" selection-start-line="266" selection-start-column="26" selection-end-line="266" selection-end-column="112" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/maps_onsets.py">
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/config/config.ini">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="222" selection-start-line="222" selection-end-line="222" />
+        <state relative-caret-position="130">
+          <caret line="8" column="115" selection-start-line="8" selection-start-column="115" selection-end-line="8" selection-end-column="115" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Roaming/Python/Python37/site-packages/joblib/parallel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="262" selection-start-line="262" selection-end-line="262" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pyrcn_amt/bin/timit_phoneme_recognition.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="240" selection-start-line="240" selection-end-line="240" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

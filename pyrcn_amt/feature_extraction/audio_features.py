@@ -1,7 +1,9 @@
 import os
 import numpy as np
+from scipy.signal import hanning as hann
 from madmom.io.audio import load_audio_file, LoadAudioFileError
 import soundfile as sf
+import librosa
 from librosa.core import resample
 
 from madmom.processors import SequentialProcessor, ParallelProcessor
@@ -10,6 +12,8 @@ from madmom.audio.stft import ShortTimeFourierTransformProcessor
 from madmom.audio.filters import LogarithmicFilterbank
 from madmom.audio.spectrogram import FilteredSpectrogramProcessor, LogarithmicSpectrogramProcessor, SpectrogramDifferenceProcessor
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.pipeline import FeatureUnion, Pipeline
+from pyrcn_amt.feature_extraction.feature_extractor import FeatureExtractor
 
 
 def parse_feature_settings(feature_settings):

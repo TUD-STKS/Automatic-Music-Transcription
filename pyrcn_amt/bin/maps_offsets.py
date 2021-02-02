@@ -12,7 +12,7 @@ from pyrcn_amt.datasets import maps_dataset
 from pyrcn_amt.feature_extraction.audio_features import parse_feature_settings, create_processors, load_sound_file, extract_features
 from pyrcn_amt.feature_extraction.discretize_labels import discretize_offset_labels
 from pyrcn_amt.evaluation import loss_functions
-from pyrcn_amt.config.parse_config_file import parse_config_file
+from pyrcn_amt.config.parse_configuration import parse_config_file
 from pyrcn_amt.evaluation.onset_scoring import determine_peak_picking_threshold
 from pyrcn_amt.post_processing.binarize_output import peak_picking
 

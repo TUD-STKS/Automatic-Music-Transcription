@@ -1,120 +1,47 @@
 import os
 import csv
 import numpy as np
-from madmom.utils import combine_events
+import madmom
 
 
-def download_dataset(dataset_path: str = None):
+class MAPSDataset:
+    """Corpus object for the MusicNET dataset
     """
-    This function aims to download the MAPS Dataset
-    :param dataset_path:
-    :return:
-    """
-    raise NotImplementedError
 
+    audio_extension = ".wav"
+    label_extension = ".txt"
+    split_extension = ""
 
-def load_dataset(dataset_path: str = None, fold_id: int = 1, validation: bool = True, configuration: int = 1):
-    """
-    This function aims to load the MAPS Dataset.
-    :param dataset_path:
-    :param fold_id:
-    :param validation:
-    :param configuration:
-    :return:
-    """
-    dataset_path = os.path.normpath(dataset_path)
-    if configuration == 1:
-        config_path = "sigtia-conf1-splits"
-    elif configuration == 2:
-        config_path = "sigtia-conf2-splits"
-    elif configuration == 3:
-        config_path = "sigtia-conf3-splits"
-    else:
-        raise ValueError
+    def __init__(self, audio_dir, label_dir, split_dir, configuration: int = 1):
+        """Corpus(transcription_dir, audio_dir)
+        Create a corpus object with transcriptions and audio files
+        in the specified create_directories
+        """
 
-    if fold_id == 0:
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_1', 'train')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            training_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_1', 'valid')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            validation_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_1', 'test')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            test_set = content
-    elif fold_id == 1:
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_2', 'train')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            training_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_2', 'valid')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            validation_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_2', 'test')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            test_set = content
-    elif fold_id == 2:
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_3', 'train')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            training_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_3', 'valid')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            validation_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_3', 'test')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            test_set = content
-    elif fold_id == 3:
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_4', 'train')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            training_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_4', 'valid')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            validation_set = content
-        with open(os.path.join(dataset_path, 'mapsSplits', config_path, 'fold_4', 'test')) as f:
-            content = f.readlines()
-            content = [(os.path.join(dataset_path, x.strip() + ".wav"),
-                        os.path.join(dataset_path, x.strip() + ".txt")) for x in content]
-            test_set = content
-    else:
-        raise ValueError
+        self.audio_dir = os.path.realpath(audio_dir)
+        self.label_dir = os.path.realpath(label_dir)
+        self.split_dir = os.path.realpath(split_dir)
+        self.configuration = configuration
 
-    if validation:
-        return (training_set, validation_set), test_set
-    else:
-        training_set = training_set + validation_set
-        return training_set, test_set
+    def get_audio_dir(self):
+        "get_audio_dir() - Return audio directory"
+        return self.audio_dir
 
+    def get_label_dir(self):
+        "get_label_dir() - Return label directory"
+        return self.label_dir
 
-def get_pitch_labels(filename: str = None):
-    """
-    This function returns the pitch labels.
-    :param filename:
-    :return:
-    """
-    try:
+    def get_note_events(self, utterance):
+        """get_onset_events(utterance)
+        Given a file name of a specific utterance, e.g.
+            ah_development_guitar_2684_TexasMusicForge_Dandelion_pt1
+        returns the note events with start and stop in seconds
+
+        Returns:
+        start, note, duration
+        """
         notes = []
-        with open(filename, 'r') as f:
+        with open(utterance, 'r') as f:
             reader = csv.DictReader(f, delimiter='\t')
             for label in reader:
                 start_time = float(label['OnsetTime'])
@@ -122,42 +49,137 @@ def get_pitch_labels(filename: str = None):
                 note = int(label['MidiPitch'])
                 notes.append([start_time, note, end_time - start_time])
         return np.array(notes)
-    except FileNotFoundError:
-        raise("File not found: {0}".format(filename))
 
+    def get_onset_events(self, utterance):
+        """get_onset_events(utterance)
+        Given a file name of a specific utterance, e.g.
+            ah_development_guitar_2684_TexasMusicForge_Dandelion_pt1
+        returns the instrument events with start and stop in seconds
 
-def get_onset_labels(filename: str = None):
+        If fs is None, returns instrument events with start and stop in samples
+
+        Returns:
+        start, note, duration
     """
-    This function returns the onset labels.
-    :param filename:
-    :return:
-    """
-    try:
-        with open(filename, 'r') as f:
+        onset_labels = []
+        with open(utterance, 'r') as f:
             reader = csv.DictReader(f, delimiter='\t')
-            onset_labels = []
             for label in reader:
-                onset_labels.append(float(label['OnsetTime']))
+                start_time = float(label['OnsetTime'])
+                note = int(label['MidiPitch'])
+                onset_labels.append([start_time, note])
+        return madmom.utils.combine_events(list(dict.fromkeys(onset_labels)), 0.03, combine='mean')
 
-        return combine_events(list(dict.fromkeys(onset_labels)), 0.03, combine='mean')
+    def get_offset_events(self, utterance):
+        """get_offset_events(utterance)
+        Given a file name of a specific utterance, e.g.
+            ah_development_guitar_2684_TexasMusicForge_Dandelion_pt1
+        returns the instrument events with start and stop in seconds
 
-    except FileNotFoundError:
-        raise("File not found: {0}".format(filename))
+        If fs is None, returns instrument events with start and stop in samples
 
-
-def get_offset_labels(filename: str = None):
-    """
-    This function returns the offset labels.
-    :param filename:
-    :return:
-    """
-    try:
-        with open(filename, 'r') as f:
+        Returns:
+        start, note, duration
+        """
+        offset_labels = []
+        with open(utterance, 'r') as f:
             reader = csv.DictReader(f, delimiter='\t')
-            offset_labels = []
             for label in reader:
-                offset_labels.append(float(label['OffsetTime']))
-        return combine_events(list(dict.fromkeys(offset_labels)), 0.03, combine='mean')
+                start_time = float(label['OnsetTime'])
+                note = int(label['MidiPitch'])
+                offset_labels.append([start_time, note])
+        return madmom.utils.combine_events(list(dict.fromkeys(offset_labels)), 0.03, combine='mean')
 
-    except FileNotFoundError:
-        raise("File not found: {0}".format(filename))
+    def get_note_labels(self, utterance, fps=100, n_frames=None):
+        """get_labels(utterance)
+        Similar to get_phoneme_transciption, but assumes that a feature
+        extractor has been set and uses the feature sample rate to align
+        the phoneme transcription to feature frames
+
+        Returns list
+        start - start frames
+        stop - stop frames
+        phonemes - phonemes[idx] is between start[idx]  and stop[idx]
+
+        """
+        note_times = self.get_note_events(utterance=utterance)
+        note_targets = madmom.utils.quantize_notes(notes=note_times, fps=fps, num_pitches=128, length=n_frames)
+        note_targets = madmom.audio.signal.smooth(note_targets, np.array([0.25, 0.5, 0.25]))
+        return note_targets
+
+    def get_onset_labels(self, utterance, fps=100, n_frames=None):
+        """get_labels(utterance)
+        Similar to get_phoneme_transciption, but assumes that a feature
+        extractor has been set and uses the feature sample rate to align
+        the phoneme transcription to feature frames
+
+        Returns list
+        start - start frames
+        stop - stop frames
+        phonemes - phonemes[idx] is between start[idx]  and stop[idx]
+
+        """
+        onset_times = self.get_onset_events(utterance=utterance)
+        onset_targets = madmom.utils.quantize_events(events=onset_times, fps=fps, length=n_frames)
+        onset_targets = madmom.audio.signal.smooth(onset_targets, np.asarray([0.5, 1.0, 0.5]))
+        return onset_targets
+
+    def get_offset_labels(self, utterance, fps=100, n_frames=None):
+        """get_labels(utterance)
+        Similar to get_phoneme_transciption, but assumes that a feature
+        extractor has been set and uses the feature sample rate to align
+        the phoneme transcription to feature frames
+
+        Returns list
+        start - start frames
+        stop - stop frames
+        phonemes - phonemes[idx] is between start[idx]  and stop[idx]
+
+        """
+        offset_times = self.get_offset_events(utterance=utterance)
+        offset_targets = madmom.utils.quantize_events(events=offset_times, fps=fps, length=n_frames)
+        offset_targets = madmom.audio.signal.smooth(offset_targets, np.asarray([0.5, 1.0, 0.5]))
+        return offset_targets
+
+    def get_audiofilename(self, utterance):
+        """get_audiofilename(utterance)
+        Given a relative path to a specific utterance, e.g.
+            tra[in/dr1/jcjf0/sa1
+        construct a full pathname to the audio file associated with it:
+            C:\Data\corpora\timit\wav16\train/dr1/jcjf0\sa1.wav
+        """
+        return os.path.join(self.audio_dir, utterance + ".wav")
+
+    def get_labelfilename(self, utterance, fold="train"):
+        """get_labelfilename(utterance)
+        Given a relative path to a specific utterance, e.g.
+            tra[in/dr1/jcjf0/sa1
+        construct a full pathname to the audio file associated with it:
+            C:\Data\corpora\timit\wav16\train/dr1/jcjf0\sa1.wav
+        """
+        return os.path.join(self.label_dir, fold + "_labels", utterance + ".csv")
+
+    def get_utterances(self, fold=0, split="train"):
+        """get_utterances(utttype)
+        Return list of train or test utterances (as specified by utttype)
+
+        e.g.  get_utterances('train')
+        returns a list:
+            [train/dr1/jcjf0/sa1, train/dr1/jcjf0/sa2, ...
+             train/dr8/mtcs0/sx352]
+        """
+        fold_name = os.path.join(self.split_dir, "sigtia-conf" + str(self.configuration) +"-splits", "fold_" + str(fold),
+                                 split)
+        utterances = np.loadtxt(fname=fold_name, dtype=str)
+        return utterances
+
+
+if __name__ == "__main__":
+    corpus = MAPSDataset(audio_dir=r"Z:\Projekt-Musik-Datenbank\MultiPitch-Tracking",
+                         label_dir=r"Z:\Projekt-Musik-Datenbank\MultiPitch-Tracking",
+                         split_dir=r"Z:\Projekt-Musik-Datenbank\MultiPitch-Tracking\mapsSplits",
+                         configuration=1)
+    training_utterances = corpus.get_utterances(fold=1, split="train")
+    utt = corpus.get_audiofilename(training_utterances[0])
+    test_utterances = corpus.get_utterances(fold=1, split="test")
+    utt = corpus.get_audiofilename(test_utterances[0])

@@ -12,7 +12,7 @@ from pyrcn_amt.datasets import maps_dataset
 from pyrcn_amt.feature_extraction.audio_features import parse_feature_settings, create_processors, load_sound_file, extract_features
 from pyrcn_amt.feature_extraction.discretize_labels import discretize_onset_labels
 from pyrcn_amt.evaluation import loss_functions
-from pyrcn_amt.config.parse_config_file import parse_config_file
+from pyrcn_amt.config.parse_configuration import parse_config_file
 from pyrcn_amt.evaluation.onset_scoring import determine_peak_picking_threshold
 from pyrcn_amt.post_processing.binarize_output import peak_picking
 
@@ -95,6 +95,7 @@ def validate_maps_onsets(config_file):
         training_set, test_set = maps_dataset.load_dataset(dataset_path=in_folder, fold_id=k, validation=False, configuration=2)
         tmp_scores = Parallel(n_jobs=n_jobs)(delayed(score_function)(base_esn, params, feature_settings, pre_processor, scaler, training_set, test_set, out_folder) for params in ParameterGrid(fit_params))
         scores.append(tmp_scores)
+        break
     dump(scores, filename=os.path.join(out_folder, 'scores.lst'))
 
 
@@ -210,12 +211,13 @@ def score_function(base_esn, params, feature_settings, pre_processor, scaler, tr
     Y_pred_test = []
     Onset_times_test = []
     for fids in test_set:
-        s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
-        U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
-        onset_labels = maps_dataset.get_onset_labels(fids[1])
-        Onset_times_test.append(onset_labels)
-        y_pred = esn.predict(X=U, keep_reservoir_state=False)
-        Y_pred_test.append(y_pred)
+        if "ENSTDkCl" in fids[0]:
+            s = load_sound_file(file_name=fids[0], feature_settings=feature_settings)
+            U = extract_features(s=s, pre_processor=pre_processor, scaler=scaler)
+            onset_labels = maps_dataset.get_onset_labels(fids[1])
+            Onset_times_test.append(onset_labels)
+            y_pred = esn.predict(X=U, keep_reservoir_state=False)
+            Y_pred_test.append(y_pred)
     test_scores = determine_peak_picking_threshold(Onset_times_ref=Onset_times_test, odf=Y_pred_test, threshold=np.linspace(start=0.2, stop=0.5, num=16))
 
     return train_scores, test_scores
