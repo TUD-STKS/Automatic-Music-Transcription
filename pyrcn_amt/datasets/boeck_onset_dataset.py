@@ -100,6 +100,19 @@ class BoeckOnsetCorpus:
         utterances = np.loadtxt(fname=fold_name, dtype=str)
         return utterances
 
+    def get_unlabeled_utterances(self):
+        """get_unlabeled_utterances(utttype)
+        Return list of train or test utterances (as specified by utttype)
+
+        e.g.  get_utterances('train')
+        returns a list:
+            [train/dr1/jcjf0/sa1, train/dr1/jcjf0/sa2, ...
+             train/dr8/mtcs0/sx352]
+        """
+        fold_name = os.path.join(self.split_dir, "unlabeled" + self.split_extension)
+        utterances = np.loadtxt(fname=fold_name, dtype=str, comments=None)
+        return utterances
+
 
 if __name__ == "__main__":
     corpus = BoeckOnsetCorpus(audio_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_audio",

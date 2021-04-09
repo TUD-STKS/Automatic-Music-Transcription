@@ -11,6 +11,7 @@ from madmom.audio.spectrogram import FilteredSpectrogramProcessor, LogarithmicSp
     SpectrogramDifferenceProcessor
 
 from shutil import copyfile
+from sklearn.cluster import MiniBatchKMeans
 from sklearn.model_selection import ParameterGrid
 from sklearn.pipeline import Pipeline
 from sklearn.base import clone
@@ -18,7 +19,7 @@ from sklearn.metrics import mean_squared_error
 from joblib import dump, load, Parallel, delayed
 
 from pyrcn.echo_state_network import ESNRegressor
-from pyrcn.base import InputToNode, NodeToNode
+from pyrcn.base import InputToNode, PredefinedWeightsInputToNode, NodeToNode
 from pyrcn.linear_model import IncrementalRegression
 
 import yaml
@@ -73,9 +74,9 @@ def train_onset_detection(config_file):
 
     base_esn = ESNRegressor(input_to_node=InputToNode(), node_to_node=NodeToNode(), regressor=IncrementalRegression())
 
-    corpus = BoeckOnsetCorpus(audio_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_audio",
-                              label_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_annotations",
-                              split_dir=r"Z:\Projekt-Musik-Datenbank\OnsetDetektion\onsets_splits")
+    corpus = BoeckOnsetCorpus(audio_dir=os.path.join(experiment_settings["in_folder"], "onsets_audio"),
+                              label_dir=os.path.join(experiment_settings["in_folder"], "onsets_annotations"),
+                              split_dir=os.path.join(experiment_settings["in_folder"], "onsets_splits"))
 
     losses = []
     for k in range(8):
@@ -105,7 +106,6 @@ def train_onset_detection(config_file):
             validation_files = corpus.get_utterances(fold=5)
         else:
             raise ValueError("maximum number of folds is 8. Currently, k is {0}".format(k))
-
         tmp_losses = Parallel(n_jobs=1)(delayed(opt_function)(base_esn, params, feature_extraction_pipeline, corpus,
                                                               training_files, validation_files, experiment_settings)
                                         for params in ParameterGrid(param_grid=param_grid))
@@ -198,9 +198,36 @@ def test_onset_detection(config_file, in_file, out_file):
             f.write('\n')
 
 
+def train_kmeans(feature_extraction_pipeline, corpus, training_utterances, hidden_layer_size=50):
+    unlabeled_utterances = corpus.get_unlabeled_utterances()
+    X = []
+    for fids in training_utterances:
+        U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
+        X.append(U)
+    """
+    for fids in unlabeled_utterances:
+        U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
+        X.append(U)
+    """
+    if hidden_layer_size is not None:
+        kmeans = MiniBatchKMeans(n_clusters=hidden_layer_size, n_init=20,  reassignment_ratio=0, max_no_improvement=50,
+                                 init='k-means++', verbose=0, random_state=1)
+    else:
+        kmeans = MiniBatchKMeans(n_clusters=50, n_init=20, reassignment_ratio=0, max_no_improvement=50,
+                                 init='k-means++', verbose=0, random_state=1)
+    kmeans.fit(X=np.concatenate(X))
+    return kmeans
+
+
 def train_esn(base_esn, params, feature_extraction_pipeline, corpus, training_utterances, experiment_settings):
     print(params)
+    kmeans = train_kmeans(feature_extraction_pipeline, corpus, training_utterances,
+                          params["node_to_node__hidden_layer_size"])
     esn = clone(base_esn)
+    esn.input_to_node = PredefinedWeightsInputToNode(
+        predefined_input_weights=np.divide(kmeans.cluster_centers_,
+                                           np.linalg.norm(kmeans.cluster_centers_, axis=1)[:, None]).T
+    )
     esn.set_params(**params)
 
     for fids in training_utterances[:-1]:
@@ -210,6 +237,7 @@ def train_esn(base_esn, params, feature_extraction_pipeline, corpus, training_ut
     U = feature_extraction_pipeline.transform(corpus.get_audiofilename(training_utterances[-1])).T
     y = corpus.get_labels(corpus.get_labelfilename(training_utterances[-1]), fps=100, n_frames=U.shape[0])
     esn.partial_fit(X=U, y=y, postpone_inverse=False)
+
     serialize = False
     if serialize:
         dump(esn, os.path.join(experiment_settings["out_folder"],
@@ -232,15 +260,15 @@ def opt_function(base_esn, params, feature_extraction_pipeline, corpus, training
         y_pred = esn.predict(X=U)
         train_loss.append([cosine(y_true, y_pred), mean_squared_error(y_true, y_pred)])
 
-    validation_loss = []
+    val_loss = []
     for fids in validation_utterances:
         U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids)).T
         y_true = corpus.get_labels(corpus.get_labelfilename(fids), fps=100, n_frames=U.shape[0])
         y_true[y_true < 1] = 0
         y_pred = esn.predict(X=U)
-        validation_loss.append([cosine(y_true, y_pred), mean_squared_error(y_true, y_pred)])
+        val_loss.append([cosine(y_true, y_pred), mean_squared_error(y_true, y_pred)])
 
-    return [np.mean(train_loss, axis=0), np.mean(validation_loss, axis=0)]
+    return [np.mean(train_loss, axis=0), np.mean(val_loss, axis=0)]
 
 
 def score_function(base_esn, params, feature_extraction_pipeline, corpus, k, experiment_settings):
@@ -289,8 +317,10 @@ def score_function(base_esn, params, feature_extraction_pipeline, corpus, k, exp
         Onset_times_train.append(y_true)
         y_pred = esn.predict(X=U)
         Y_pred_train.append(y_pred)
-    train_scores = determine_peak_picking_threshold(odf=Y_pred_train, threshold=np.linspace(start=0.2, stop=0.5, num=16),
+    train_scores = determine_peak_picking_threshold(odf=Y_pred_train,
+                                                    threshold=np.linspace(start=0.2, stop=0.5, num=16),
                                                     Onset_times_ref=Onset_times_train)
+
     # Test set
     Y_pred_val = []
     Onset_times_val = []
@@ -300,8 +330,10 @@ def score_function(base_esn, params, feature_extraction_pipeline, corpus, k, exp
         Onset_times_val.append(y_true)
         y_pred = esn.predict(X=U)
         Y_pred_val.append(y_pred)
-    val_scores = determine_peak_picking_threshold(odf=Y_pred_val, threshold=np.linspace(start=0.2, stop=0.5, num=16),
+    val_scores = determine_peak_picking_threshold(odf=Y_pred_val,
+                                                  threshold=np.linspace(start=0.2, stop=0.5, num=16),
                                                   Onset_times_ref=Onset_times_val)
+
     return train_scores, val_scores
 
 

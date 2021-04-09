@@ -102,7 +102,7 @@ def train_musicnet_frames(config_file):
         os.mkdir(os.path.join(experiment_settings['out_folder'], 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.ini'))
+    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.yaml'))
 
     try:
         feature_extraction_pipeline = load(
@@ -137,7 +137,7 @@ def validate_musicnet_frames(config_file):
         os.mkdir(os.path.join(experiment_settings['out_folder'], 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.ini'))
+    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.yaml'))
 
     try:
         feature_extraction_pipeline = load(
@@ -172,7 +172,7 @@ def test_musicnet_frames(config_file, in_file, out_file):
         os.mkdir(os.path.join(experiment_settings['out_folder'], 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.ini'))
+    copyfile(config_file, os.path.join(experiment_settings['out_folder'], 'config.yaml'))
 
     try:
         feature_extraction_pipeline = load(

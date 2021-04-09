@@ -7,6 +7,7 @@ import librosa
 
 from shutil import copyfile
 from sklearn.model_selection import ParameterGrid
+from sklearn.cluster import MiniBatchKMeans
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, log_loss, zero_one_loss, accuracy_score
@@ -135,7 +136,7 @@ def train_phoneme_recognition(config_file):
 
     training_files = corpus.get_utterances("train")
     test_files = corpus.get_utterances("test")
-    losses = Parallel(n_jobs=-1)(delayed(opt_function)(base_esn, params, feature_extraction_pipeline, corpus,
+    losses = Parallel(n_jobs=1)(delayed(opt_function)(base_esn, params, feature_extraction_pipeline, corpus,
                                                       training_files, test_files, experiment_settings)
                                  for params in ParameterGrid(fit_params))
     dump(losses, filename=os.path.join(experiment_settings["out_folder"], 'losses.lst'))
@@ -189,13 +190,28 @@ def validate_phoneme_recognition(config_file):
 
 def train_esn(base_esn, params, feature_extraction_pipeline, corpus, training_utterances, experiment_settings):
     print(params)
+    X = []
+    for fids in training_utterances:
+        if not fids[:-1].endswith("sa"):
+            U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids))
+            X.append(U)
+    if "hidden_layer_size" in params:
+        fname = os.path.join(experiment_settings["out_folder"], "models",
+                             "esn_" + str(params['hidden_layer_size']) + '_' + str(params['bi_directional']) + '.joblib')
+        kmeans = MiniBatchKMeans(n_clusters=params["hidden_layer_size"], reassignment_ratio=0, max_no_improvement=50,
+                                 init='k-means++', verbose=2, random_state=1)
+    else:
+        kmeans = MiniBatchKMeans(n_clusters=50, reassignment_ratio=0, max_no_improvement=50, init='k-means++',
+                                 verbose=2, random_state=0)
+    kmeans.fit(X=np.concatenate(X))
+    w_in = np.divide(kmeans.cluster_centers_, np.linalg.norm(kmeans.cluster_centers_, axis=1)[:, None])
+    del X
+
     esn = base_esn
     if "input_scaling" in params:
         esn.input_to_nodes[0][1].set_params(**{"input_scaling": params["input_scaling"]})
         del params["input_scaling"]
     if "hidden_layer_size" in params:
-        fname = os.path.join(experiment_settings["out_folder"], "models",
-                             "esn_" + str(params['hidden_layer_size']) + '_' + str(params['bi_directional']) + '.joblib')
         esn.input_to_nodes[0][1].set_params(**{"hidden_layer_size": params["hidden_layer_size"]})
         esn.nodes_to_nodes[0][1].set_params(**{"hidden_layer_size": params["hidden_layer_size"]})
         del params["hidden_layer_size"]
@@ -204,6 +220,14 @@ def train_esn(base_esn, params, feature_extraction_pipeline, corpus, training_ut
         del params["alpha"]
     if params:
         esn.nodes_to_nodes[0][1].set_params(**params)
+
+    U = feature_extraction_pipeline.transform(corpus.get_audiofilename(training_utterances[0]))
+    esn.input_to_nodes[0][1].fit(X=U)
+    esn.input_to_nodes[0][1]._input_weights = w_in.T
+    esn._input_to_node = FeatureUnion(transformer_list=[('default', esn.input_to_nodes[0][1])], n_jobs=None,
+                                      transformer_weights=None).fit(U)
+    esn._input_to_node.transformer_list[0][1]._input_weights = w_in.T
+
     for fids in training_utterances[:-1]:
         if not fids[:-1].endswith("sa"):
             U = feature_extraction_pipeline.transform(corpus.get_audiofilename(fids))

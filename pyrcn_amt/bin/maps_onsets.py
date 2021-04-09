@@ -55,7 +55,7 @@ def train_maps_onsets(config_file):
         loss_function = loss_functions.mean_squared_error
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(out_folder, 'config.ini'))
+    copyfile(config_file, os.path.join(out_folder, 'config.yaml'))
 
     losses = []
     for k in range(4):
@@ -88,7 +88,7 @@ def validate_maps_onsets(config_file):
         os.mkdir(os.path.join(out_folder, 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(out_folder, 'config.ini'))
+    copyfile(config_file, os.path.join(out_folder, 'config.yaml'))
 
     scores = []
     for k in range(4):
@@ -122,7 +122,7 @@ def test_maps_onsets(config_file, in_file, out_file):
         os.mkdir(os.path.join(out_folder, 'models'))
 
     # replicate config file and store results there
-    copyfile(config_file, os.path.join(out_folder, 'config.ini'))
+    copyfile(config_file, os.path.join(out_folder, 'config.yaml'))
     try:
         f_name = r"C:\Users\Steiner\Documents\Python\Automatic-Music-Transcription\pyrcn_amt\experiments\experiment_8\models\esn_500_False.joblib"
         esn = load(f_name)

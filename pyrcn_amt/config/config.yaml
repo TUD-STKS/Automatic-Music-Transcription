@@ -1,0 +1,21 @@
+experiment:
+  in_folder: Z:/Projekt-Musik-Datenbank/MultiPitch-Tracking/
+  out_folder: C:/Users/Steiner/Documents/Python/Automatic-Music-Transcription/pyrcn_amt/experiments/experiment_3
+  experiment_name: experiment_3
+
+param_grid:
+  input_to_node__hidden_layer_size: [500]
+  input_to_node__activation: ['identity']
+  input_to_node__input_scaling: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  input_to_node__bias_scaling: [0.0]
+  input_to_node__k_in: [10]
+  input_to_node__random_state: [1]
+  node_to_node__hidden_layer_size: [500]
+  node_to_node__activation: ['tanh']
+  node_to_node__spectral_radius: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  node_to_node__leakage: [1.0]
+  node_to_node__bias_scaling: [0.0]
+  node_to_node__bi_directional: [False]
+  node_to_node__k_rec: [10]
+  node_to_node__random_state: [1]
+  regressor__alpha: [0.00001]

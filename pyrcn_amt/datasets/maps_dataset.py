@@ -157,7 +157,7 @@ class MAPSDataset:
         construct a full pathname to the audio file associated with it:
             C:\Data\corpora\timit\wav16\train/dr1/jcjf0\sa1.wav
         """
-        return os.path.join(self.label_dir, fold + "_labels", utterance + ".csv")
+        return os.path.join(self.label_dir, utterance + ".txt")
 
     def get_utterances(self, fold=0, split="train"):
         """get_utterances(utttype)
